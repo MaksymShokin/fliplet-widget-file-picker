@@ -535,7 +535,12 @@ header a {
     content: "\f00c";
 }
 .image-overlay .fa {
+  font-size: 50px;
+}
+@media (min-width: 400px) {
+  .image-overlay .fa {
     font-size: 65px;
+  }
 }
 .menu-fixed {
     position: relative;
