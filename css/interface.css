@@ -266,10 +266,10 @@ header a {
     cursor: pointer;
 }
 
-.image-library .col-xs-4 {
+.image-library .item-holder {
     padding-left: 10px;
     padding-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .image-holder {
