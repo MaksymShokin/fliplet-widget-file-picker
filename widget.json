@@ -1,0 +1,26 @@
+{
+  "name": "Image Manager",
+  "package": "com.fliplet.file-picker",
+  "version": "1.0.0",
+  "icon": "img/icon.png",
+  "tags": ["type:component", "category:general"],
+  "provider_only": true,
+  "interface": {
+    "dependencies": [
+      "handlebars",
+      "lodash",
+      "fliplet-studio-ui",
+      "fliplet-media",
+      "bootstrap"
+    ],
+    "assets": [
+      "js/interface.templates.js",
+      "js/interface.js",
+      "css/interface.css"
+    ]
+  },
+  "build": {
+    "dependencies": [],
+    "assets": []
+  }
+}
