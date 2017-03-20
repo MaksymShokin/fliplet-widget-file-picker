@@ -334,49 +334,10 @@ header a {
     opacity: 1;
 }
 
-.image-info {
-    position: absolute;
-    left: -1px;
-    right: -1px;
-    top: 100%;
-    background-color: #FFF;
-    border: 1px solid #d9ddde;
-    padding: 9px 10px 10px;
-    margin-top: 0;
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: all 0.225s ease-in-out;
-    transition: all 0.25s ease-in-out;
-    z-index: 10;
-    word-break: break-word;
-}
-
-.image-info,
 .image-title {
     font-size: 12px;
-}
-
-.image-info p {
-    margin-bottom: 5px;
-}
-
-.image-info p + p {
-    font-size: 10px;
-    margin: 0;
-}
-
-.image-holder:hover > .image-info {
-    opacity: 1;
-    visibility: visible;
-}
-
-.image-title {
-    padding: 9px 11px;
+    margin-top: 3px;
     word-break: break-word;
-}
-
-.image-title p {
-    margin: 0;
 }
 
 .folder-selection {
@@ -410,10 +371,6 @@ header a {
 .image-library .folder,
 .image-library .image {
     cursor: pointer;
-}
-
-.image-library .folder .image-info {
-    cursor: default;
 }
 
 .image-library .folder .image-overlay {
@@ -572,16 +529,13 @@ header a {
 }
 
 .image-holder:hover .image-overlay {
-    background: rgba(204, 204, 204, 0.4);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 .item-holder.selected .image-overlay .fa:before {
     content: "\f00c";
 }
 .image-overlay .fa {
     font-size: 65px;
-}
-.item-holder.selected .image-info {
-    border-color: #00abd2;
 }
 .menu-fixed {
     position: relative;
