@@ -528,6 +528,7 @@ header a {
     padding: 10px 15px;
 }
 
+.item-holder.selected .image-holder .image-overlay,
 .image-holder:hover .image-overlay {
     background-color: rgba(255, 255, 255, 0.8);
 }

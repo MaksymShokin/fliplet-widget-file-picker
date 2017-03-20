@@ -5,7 +5,7 @@ this["Fliplet"]["Widget"]["Templates"] = this["Fliplet"]["Widget"]["Templates"] 
 this["Fliplet"]["Widget"]["Templates"]["templates.app"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder folder\" data-app-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder folder\" data-app-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\">\n    <div class=\"image-holder\">\n        <div class=\"image-overlay\">\n            <i class=\"fa fa-folder\" aria-hidden=\"true\"></i>\n        </div>\n    </div>\n    <div class=\"image-title\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
@@ -15,7 +15,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.app"] = Handlebars.template({"
 this["Fliplet"]["Widget"]["Templates"]["templates.document"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder file image document\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image document\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
@@ -27,7 +27,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.document"] = Handlebars.templa
 this["Fliplet"]["Widget"]["Templates"]["templates.folder"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder folder\" data-folder-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder folder\" data-folder-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-parent-id=\""
     + alias4(((helper = (helper = helpers.parentId || (depth0 != null ? depth0.parentId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"parentId","hash":{},"data":data}) : helper)))
@@ -39,7 +39,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.folder"] = Handlebars.template
 this["Fliplet"]["Widget"]["Templates"]["templates.image"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder file image\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
@@ -57,7 +57,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.nofiles"] = Handlebars.templat
 this["Fliplet"]["Widget"]["Templates"]["templates.organization"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder folder\" data-organization-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder folder\" data-organization-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\">\n    <div class=\"image-holder\">\n        <div class=\"image-overlay\">\n            <i class=\"fa fa-folder\" aria-hidden=\"true\"></i>\n        </div>\n    </div>\n    <div class=\"image-title\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
@@ -67,7 +67,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.organization"] = Handlebars.te
 this["Fliplet"]["Widget"]["Templates"]["templates.other"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder file image other\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image other\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
@@ -79,7 +79,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.other"] = Handlebars.template(
 this["Fliplet"]["Widget"]["Templates"]["templates.video"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 item-holder file image video\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image video\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
