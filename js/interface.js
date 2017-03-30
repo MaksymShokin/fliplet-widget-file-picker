@@ -15,6 +15,7 @@ var data = Fliplet.Widget.getData() || {};
 
 data.type = data.type || '';
 data.selectFiles = data.selectFiles || [];
+data.autoSelectOnUpload = data.autoSelectOnUpload || false;
 
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
@@ -77,6 +78,7 @@ var extensionDictionary = {
   ]
 };
 
+
 $('[data-toggle="tooltip"]').tooltip();
 $('#browser-label').text('Browser ' +  (data.type === 'folder' ? 'folders' : 'files') + ' in');
 
@@ -107,6 +109,7 @@ function getFileTemplate(file) {
   var template;
   switch(type){
     case 'image':
+      file.urlSmall = Fliplet.Env.get('apiUrl') + 'v1/media/files/' + file.id + '/contents?size=small';
       template = templates.image(file);
       break;
     case 'video':
@@ -216,58 +219,55 @@ function getFolderAndFiles(filter){
 function renderFolderContent(values) {
   folders = values[0].folders;
   files = values[1].files;
+  emitSelected();
 
   drawContentItems();
 }
 
-function folderItems(classname, callback, item) {
-  $('.' + classname).not(this).each(function () {
-    item = callback.bind(this)(item);
-  });
-  return item;
-}
-
-function unselectAll($el){
-  $('.selected').not($el).removeClass('selected');
-}
-
-function getSelectedIds(){
-  var selectedFiles = [];
-  var selectedFolders = [];
-  $('.selected').toArray().forEach(function(el){
-    var $el = $(el);
-    if($el.data('folder-id')){
-      selectedFolders.push($el.data('folder-id'));
-    } else if($el.data('file-id')) {
-      selectedFiles.push($el.data('file-id'));
-    }
+function unselectAll(){
+  files.forEach(function(file) {
+    return file.selected = false;
   });
 
-  return {
-    files: selectedFiles,
-    folders: selectedFolders
-  }
+  folders.forEach(function(folder) {
+    return folder.selected = false;
+  });
+
+  $('.selected').removeClass('selected');
 }
 
 function selectFile(id) {
   if (data.type === 'folder') return;
-  var item = files.find(function(file) {
+  var file = files.find(function(file) {
     return file.id === id;
   });
-  if(!extensionClickFilter(item.url.split('.').pop())) return;
+  if (!file) return;
+  if(!extensionClickFilter(file.url.split('.').pop())) return;
+
+  var isSelected = !file.selected;
+  if(!data.selectMultiple) unselectAll();
+  file.selected = isSelected;
 
   var $el = $('.file[data-file-id=' + id +']');
-  if(!data.selectMultiple) unselectAll($el);
-  $el.toggleClass('selected');
+  $el[!!file.selected ? 'addClass' : 'removeClass']('selected');
   emitSelected();
 }
 
 function selectFolder(id) {
   if (!(data.type === 'folder' || data.type === '')) return;
 
+  var folder = folders.find(function(folder) {
+    return folder.id === id;
+  });
+  if (!folder) return;
+
+  var isSelected = !folder.selected;
+  if(!data.selectMultiple) unselectAll();
+  folder.selected = isSelected;
+
   var $el = $('.folder[data-folder-id=' + id + ']');
-  if (!data.selectMultiple) unselectAll($el);
-  $el.toggleClass('selected');
+  $el[!!folder.selected ? 'addClass' : 'removeClass']('selected');
+
   emitSelected();
 }
 
@@ -343,20 +343,19 @@ function restoreWidgetState() {
   })
 }
 
-function getSelectedFilesData(filesId) {
+function getSelectedFilesData() {
   return files
-  .filter(function(file) {return filesId.includes(file.id)});
+  .filter(function(file) {return file.selected});
 }
 
-function getSelectedFoldersData(foldersId) {
+function getSelectedFoldersData() {
   return folders
-  .filter(function(folder) {return foldersId.includes(folder.id)});
+  .filter(function(folder) {return folder.selected});
 }
 
 //  Get object with selected files/folders data
 function getSelectedData() {
-  var selected = getSelectedIds();
-  var result = [].concat(getSelectedFoldersData(selected.folders), getSelectedFilesData(selected.files));
+  var result = [].concat(getSelectedFoldersData(), getSelectedFilesData());
   return result;
 }
 
@@ -649,6 +648,11 @@ function uploadFiles(files) {
     var files = files;
     if(files.length) {
       addFilesToCurrentFiles(files);
+    }
+    if (data.autoSelectOnUpload){
+      files.forEach(function(file) {
+        selectFile(file.id);
+      })
     }
     hideProgressBar();
 

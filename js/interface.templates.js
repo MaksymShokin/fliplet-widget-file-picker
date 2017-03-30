@@ -12,10 +12,14 @@ this["Fliplet"]["Widget"]["Templates"]["templates.app"] = Handlebars.template({"
     + "</div>\n</div>\n";
 },"useData":true});
 
-this["Fliplet"]["Widget"]["Templates"]["templates.document"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+this["Fliplet"]["Widget"]["Templates"]["templates.document"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return " selected ";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image document\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image document "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
@@ -24,10 +28,14 @@ this["Fliplet"]["Widget"]["Templates"]["templates.document"] = Handlebars.templa
     + "</div>\n</div>\n";
 },"useData":true});
 
-this["Fliplet"]["Widget"]["Templates"]["templates.folder"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+this["Fliplet"]["Widget"]["Templates"]["templates.folder"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return " selected ";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder folder\" data-folder-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder folder "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-folder-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-parent-id=\""
     + alias4(((helper = (helper = helpers.parentId || (depth0 != null ? depth0.parentId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"parentId","hash":{},"data":data}) : helper)))
@@ -36,15 +44,19 @@ this["Fliplet"]["Widget"]["Templates"]["templates.folder"] = Handlebars.template
     + "</div>\n</div>\n";
 },"useData":true});
 
-this["Fliplet"]["Widget"]["Templates"]["templates.image"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+this["Fliplet"]["Widget"]["Templates"]["templates.image"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return " selected ";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
     + "\">\n    <div class=\"image-holder\" style=\"background-image: url('"
-    + alias4(((helper = (helper = helpers.thumbnail || (depth0 != null ? depth0.thumbnail : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"thumbnail","hash":{},"data":data}) : helper)))
+    + alias4(((helper = (helper = helpers.urlSmall || (depth0 != null ? depth0.urlSmall : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"urlSmall","hash":{},"data":data}) : helper)))
     + "');\">\n        <div class=\"image-overlay\">\n            <i class=\"fa\" aria-hidden=\"true\"></i>\n        </div>\n    </div>\n    <div class=\"image-title\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</div>\n</div>\n";
@@ -64,10 +76,14 @@ this["Fliplet"]["Widget"]["Templates"]["templates.organization"] = Handlebars.te
     + "</div>\n</div>\n";
 },"useData":true});
 
-this["Fliplet"]["Widget"]["Templates"]["templates.other"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+this["Fliplet"]["Widget"]["Templates"]["templates.other"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return " selected ";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image other\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image other "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
@@ -76,10 +92,14 @@ this["Fliplet"]["Widget"]["Templates"]["templates.other"] = Handlebars.template(
     + "</div>\n</div>\n";
 },"useData":true});
 
-this["Fliplet"]["Widget"]["Templates"]["templates.video"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+this["Fliplet"]["Widget"]["Templates"]["templates.video"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return " selected ";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image video\" data-file-id=\""
+  return "<div class=\"col-xs-4 col-sm-3 col-md-2 item-holder file image video "
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.selected : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-file-id=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-file-ext=\""
     + alias4(((helper = (helper = helpers.ext || (depth0 != null ? depth0.ext : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ext","hash":{},"data":data}) : helper)))
