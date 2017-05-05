@@ -22,7 +22,7 @@ data.fileExtension = data.fileExtension || [];
 data.selectMultiple = data.selectMultiple || false;
 if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) data.selectFiles = [data.selectFiles[0]];
 
-if (data.type  === 'folder'){
+if (data.type === 'folder') {
   $('#actionUploadFile').remove();
 }
 
@@ -44,7 +44,7 @@ var isCancelClicked;
 var forceDropDownInit;
 
 ['app', 'image', 'document', 'other', 'video', 'folder', 'organization', 'nofiles']
-.forEach(function (tpl) {
+.forEach(function(tpl) {
   templates[tpl] = Fliplet.Widget.Templates['templates.' + tpl];
 });
 
@@ -60,17 +60,21 @@ var extensionDictionary = {
     'pdf',
     'doc',
     'docx',
-    'key',
+    'keynote',
+    'ppx',
     'ppt',
-    'odt',
+    'pptx',
+    'txt',
     'xls',
     'xlsx'
+
   ],
   'video': [
     'mov',
-    'mpeg4',
     'mp4',
     'avi',
+    'mpeg',
+    'mpg',
     'wmv',
     'flv',
     '3gpp',
@@ -80,11 +84,11 @@ var extensionDictionary = {
 
 
 $('[data-toggle="tooltip"]').tooltip();
-$('#browser-label').text('Browser ' +  (data.type === 'folder' ? 'folders' : 'files') + ' in');
+$('#browser-label').text('Browser ' + (data.type === 'folder' ? 'folders' : 'files') + ' in');
 
 var validExtensions = [];
 Object.keys(extensionDictionary).forEach(function(key) {
-  extensionDictionary[key].forEach(function(ext){
+  extensionDictionary[key].forEach(function(ext) {
     validExtensions.push({
       type: key,
       ext: ext
@@ -92,11 +96,15 @@ Object.keys(extensionDictionary).forEach(function(key) {
   })
 });
 
-function getFilteredType(extension){
-  var fileExtension = validExtensions.find(function(valid){ return valid.ext === extension});
+function getFilteredType(extension) {
+  var fileExtension = validExtensions.find(function(valid) {
+    return valid.ext === extension
+  });
   extension = extension.toLowerCase();
-  var type = ((data.fileExtension.some(function(ext) {return extension === ext.toLowerCase();}) || !data.fileExtension.length) && fileExtension)
-    ?  fileExtension.type : 'others';
+  var type = ((data.fileExtension.some(function(ext) {
+      return extension === ext.toLowerCase();
+    }) || !data.fileExtension.length) && fileExtension) ?
+    fileExtension.type : 'others';
   return (type === data.type || data.type === '') ? type : 'others';
 }
 
@@ -107,7 +115,7 @@ function getFileTemplate(file) {
   var type = getFilteredType(extension);
 
   var template;
-  switch(type){
+  switch (type) {
     case 'image':
       file.urlSmall = Fliplet.Env.get('apiUrl') + 'v1/media/files/' + file.id + '/contents?size=small';
       template = templates.image(file);
@@ -127,7 +135,7 @@ function getFileTemplate(file) {
 }
 
 function addFile(file) {
-  file.fullname = file.url.substring(file.url.lastIndexOf('/')+1);
+  file.fullname = file.url.substring(file.url.lastIndexOf('/') + 1);
   $imagesContainer.append(getFileTemplate(file));
 }
 
@@ -154,9 +162,9 @@ $('#actionNewFolder')
   .on('click', createFolder);
 
 $('#actionUploadFile')
-  .on('click',  uploadFile);
+  .on('click', uploadFile);
 
-function sortByName(item1, item2){
+function sortByName(item1, item2) {
   return byLowerCaseName(item1) > byLowerCaseName(item2);
 }
 
@@ -164,8 +172,8 @@ function sortByName(item1, item2){
 function getApps() {
   return Fliplet.Apps
     .get()
-    .then(function (apps) {
-      return apps.sort(sortByName).filter(function (app) {
+    .then(function(apps) {
+      return apps.sort(sortByName).filter(function(app) {
         return !app.legacy;
       })
     });
@@ -173,46 +181,58 @@ function getApps() {
 
 function getOrganizations() {
   return Fliplet.Organizations
-  .get()
-  .then(function (organisations){
-    return organisations
-  })
+    .get()
+    .then(function(organisations) {
+      return organisations
+    })
 }
 
 function openFolder(folderId) {
   $spinnerHolder.removeClass('hidden');
-  return getFolderAndFiles({folderId: folderId})
-  .then(renderFolderContent)
-  .then(function(){
-    updatePaths();
-    $spinnerHolder.addClass('hidden');
-  })
+  return getFolderAndFiles({
+      folderId: folderId
+    })
+    .then(renderFolderContent)
+    .then(function() {
+      updatePaths();
+      $spinnerHolder.addClass('hidden');
+    })
 }
 
 function openApp(appId) {
   $spinnerHolder.removeClass('hidden');
-  return getFolderAndFiles({appId: appId})
-  .then(renderFolderContent)
-  .then(function(){
-    updatePaths();
-    $spinnerHolder.addClass('hidden');
-  })
+  return getFolderAndFiles({
+      appId: appId
+    })
+    .then(renderFolderContent)
+    .then(function() {
+      updatePaths();
+      $spinnerHolder.addClass('hidden');
+    })
 }
 
 function openOrganization(organizationId) {
   $spinnerHolder.removeClass('hidden');
-  return getFolderAndFiles({organizationId: organizationId})
-  .then(renderFolderContent)
-  .then(function(){
-    updatePaths();
-    $spinnerHolder.addClass('hidden');
-  })
+  return getFolderAndFiles({
+      organizationId: organizationId
+    })
+    .then(renderFolderContent)
+    .then(function() {
+      updatePaths();
+      $spinnerHolder.addClass('hidden');
+    })
 }
 
-function getFolderAndFiles(filter){
+function getFolderAndFiles(filter) {
   return Promise.all([
-    Fliplet.Media.Folders.get(Object.assign({}, { type: 'folders' }, filter)),
-    Fliplet.Media.Folders.get(Object.assign({}, { type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type){return type.toLowerCase();}).join(',') : data.type }, filter))
+    Fliplet.Media.Folders.get(Object.assign({}, {
+      type: 'folders'
+    }, filter)),
+    Fliplet.Media.Folders.get(Object.assign({}, {
+      type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
+        return type.toLowerCase();
+      }).join(',') : data.type
+    }, filter))
   ])
 }
 
@@ -224,7 +244,7 @@ function renderFolderContent(values) {
   drawContentItems();
 }
 
-function unselectAll(){
+function unselectAll() {
   files.forEach(function(file) {
     return file.selected = false;
   });
@@ -242,13 +262,13 @@ function selectFile(id) {
     return file.id === id;
   });
   if (!file) return;
-  if(!extensionClickFilter(file.url.split('.').pop())) return;
+  if (!extensionClickFilter(file.url.split('.').pop())) return;
 
   var isSelected = !file.selected;
-  if(!data.selectMultiple) unselectAll();
+  if (!data.selectMultiple) unselectAll();
   file.selected = isSelected;
 
-  var $el = $('.file[data-file-id=' + id +']');
+  var $el = $('.file[data-file-id=' + id + ']');
   $el[!!file.selected ? 'addClass' : 'removeClass']('selected');
   emitSelected();
 }
@@ -262,7 +282,7 @@ function selectFolder(id) {
   if (!folder) return;
 
   var isSelected = !folder.selected;
-  if(!data.selectMultiple) unselectAll();
+  if (!data.selectMultiple) unselectAll();
   folder.selected = isSelected;
 
   var $el = $('.folder[data-folder-id=' + id + ']');
@@ -272,10 +292,10 @@ function selectFolder(id) {
 }
 
 function selectItems(items) {
-  items.forEach(function (item) {
-    if(!item.contentType) {
+  items.forEach(function(item) {
+    if (!item.contentType) {
       selectFolder(item.id)
-    } else if(item.contentType) {
+    } else if (item.contentType) {
       selectFile(item.id)
     }
   });
@@ -284,17 +304,17 @@ function selectItems(items) {
 function restoreRoot(appId, organizationId) {
   forceDropDownInit = true;
   var backItem;
-  if(appId) {
+  if (appId) {
     backItem = _.find(apps, ['id', appId]);
-    backItem.back = function () {
+    backItem.back = function() {
       return openApp(appId);
     };
     backItem.name = 'Root';
     backItem.type = 'appId';
     initDropDownState('app_' + appId);
-  } else if(organizationId) {
+  } else if (organizationId) {
     backItem = _.find(organizations, ['id', organizationId]);
-    backItem.back = function () {
+    backItem.back = function() {
       return openOrganization(organizationId);
     };
     backItem.name = 'Root';
@@ -306,51 +326,57 @@ function restoreRoot(appId, organizationId) {
   return Promise.resolve();
 }
 
-function restoreFolders(id, appId, organizationId){
-  if(!id) {
+function restoreFolders(id, appId, organizationId) {
+  if (!id) {
     return restoreRoot(appId, organizationId);
   }
 
-  return Fliplet.API.request({ url: 'v1/media/folders/' + id })
-  .then(function(res){
-    var backItem = res;
-    // Store to nav stack
-    backItem.back = function () {
-      return openFolder(id);
-    };
-    backItem.type = 'parentId';
-    upTo.unshift(backItem);
+  return Fliplet.API.request({
+      url: 'v1/media/folders/' + id
+    })
+    .then(function(res) {
+      var backItem = res;
+      // Store to nav stack
+      backItem.back = function() {
+        return openFolder(id);
+      };
+      backItem.type = 'parentId';
+      upTo.unshift(backItem);
 
-    return restoreFolders(res.parentId, res.appId, res.organizationId);
+      return restoreFolders(res.parentId, res.appId, res.organizationId);
 
-  });
+    });
 }
 
 function restoreFoldersPath(lastFolderid, appId, organizationId) {
   return restoreFolders(lastFolderid, appId, organizationId)
-  .then(function() {
-    return upTo[upTo.length-1].back();
-  });
+    .then(function() {
+      return upTo[upTo.length - 1].back();
+    });
 }
 
 function restoreWidgetState() {
   var file = data.selectFiles[0];
-  return restoreFoldersPath(file.mediaFolderId || file.parentId , file.appId, file.organizationId)
-  .then(function() {
-    return selectItems(data.selectFiles);
-  }, function(){
-    return defaultInitWidgetState();
-  })
+  return restoreFoldersPath(file.mediaFolderId || file.parentId, file.appId, file.organizationId)
+    .then(function() {
+      return selectItems(data.selectFiles);
+    }, function() {
+      return defaultInitWidgetState();
+    })
 }
 
 function getSelectedFilesData() {
   return files
-  .filter(function(file) {return file.selected});
+    .filter(function(file) {
+      return file.selected
+    });
 }
 
 function getSelectedFoldersData() {
   return folders
-  .filter(function(folder) {return folder.selected});
+    .filter(function(folder) {
+      return folder.selected
+    });
 }
 
 //  Get object with selected files/folders data
@@ -380,7 +406,7 @@ function onFolderDbClick(e) {
 
   // Store to nav stack
   backItem = _.find(folders, ['id', id]);
-  backItem.back = function () {
+  backItem.back = function() {
     return openFolder(id);
   };
   backItem.type = 'parentId';
@@ -401,24 +427,24 @@ function onFileClick(e) {
 function extensionClickFilter(extension) {
   var type = getFilteredType(extension);
 
-  if((!data.type || data.type === type) && type != 'others')
+  if ((!data.type || data.type === type) && type != 'others')
     return true;
   return false;
 }
 
 
 
-$('.back-btn').click(function () {
+$('.back-btn').click(function() {
   if (upTo.length === 0) {
     return;
   }
 
   upTo.pop();
-  upTo[upTo.length-1]
-  .back()
-  .then(function() {
-    updatePaths();
-  });
+  upTo[upTo.length - 1]
+    .back()
+    .then(function() {
+      updatePaths();
+    });
 });
 
 function updatePaths() {
@@ -450,19 +476,19 @@ function updatePaths() {
   $('.helper').html(upTo[upTo.length - 1].name);
 }
 
-function initDropDownState(id){
+function initDropDownState(id) {
   $fileDropDown.prop('disabled', '');
   $fileDropDown.val(id);
   $fileDropDown.trigger('change');
 }
 
-function defaultInitWidgetState(){
+function defaultInitWidgetState() {
   forceDropDownInit = false;
   var value = apps.length ? 'app_' + apps[0].id : 'org_' + organizations[0].id;
   initDropDownState(value);
 }
 
-function initWidgetState(){
+function initWidgetState() {
   if (data.selectFiles.length) {
     return restoreWidgetState();
   }
@@ -470,11 +496,11 @@ function initWidgetState(){
 
 }
 
-function renderApp(id){
+function renderApp(id) {
   var backItem;
   backItem = _.find(apps, ['id', id]);
   backItem.name = 'Root';
-  backItem.back = function () {
+  backItem.back = function() {
     return openApp(id);
   };
   backItem.type = 'appId';
@@ -482,11 +508,11 @@ function renderApp(id){
   openApp(id);
 }
 
-function renderOrganization(id){
+function renderOrganization(id) {
   var backItem;
   backItem = _.find(organizations, ['id', id]);
   backItem.name = 'Root';
-  backItem.back = function () {
+  backItem.back = function() {
     return openOrganization(id);
   };
   backItem.type = 'organizationId';
@@ -496,73 +522,73 @@ function renderOrganization(id){
   openOrganization(id);
 }
 
-function init(){
+function init() {
   Fliplet.Studio.emit('widget-rendered', {});
   Promise.all([
-    getOrganizations(),
-    getApps()
-  ])
-  .then(function(values){
-    //organisations
-    if (values[0].length){
-      $fileDropDown.append('<option value="" disabled>--- Organisations ---</option>');
-      values[0].sort(sortByName).forEach(function (organisation) {
-        $fileDropDown.append('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
-        organizations.push({
-          id: organisation.id,
-          name: organisation.name}
-        );
-      });
-    }
-
-    //apps
-    if (values[1].length){
-      $fileDropDown.append('<option value="" disabled>--- Apps ---</option>');
-      values[1].sort(sortByName).forEach(function (app) {
-        $fileDropDown.append('<option value="app_' + app.id + '">' + app.name + '</option>');
-        apps.push({
-          id: app.id,
-          name: app.name
+      getOrganizations(),
+      getApps()
+    ])
+    .then(function(values) {
+      //organisations
+      if (values[0].length) {
+        $fileDropDown.append('<option value="" disabled>--- Organisations ---</option>');
+        values[0].sort(sortByName).forEach(function(organisation) {
+          $fileDropDown.append('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
+          organizations.push({
+            id: organisation.id,
+            name: organisation.name
+          });
         });
+      }
+
+      //apps
+      if (values[1].length) {
+        $fileDropDown.append('<option value="" disabled>--- Apps ---</option>');
+        values[1].sort(sortByName).forEach(function(app) {
+          $fileDropDown.append('<option value="app_' + app.id + '">' + app.name + '</option>');
+          apps.push({
+            id: app.id,
+            name: app.name
+          });
+        });
+      }
+
+      // Removes disabled attribute to allow the user to use the drop-down
+
+      $fileDropDown.change(function() {
+        if (forceDropDownInit) {
+          forceDropDownInit = false;
+          return;
+        }
+        //drop down change handler
+        var data = $fileDropDown.val().split('_');
+        var type = data[0];
+        var id = parseInt(data[1]);
+        switch (type) {
+          case 'app':
+            renderApp(id);
+            break;
+          case 'org':
+            renderOrganization(id);
+            break;
+          default:
+            alert('Wrong select type: ' + type);
+        }
       });
-    }
-
-    // Removes disabled attribute to allow the user to use the drop-down
-
-    $fileDropDown.change(function(){
-      if (forceDropDownInit) {
-        forceDropDownInit = false;
-        return;
-      }
-      //drop down change handler
-      var data = $fileDropDown.val().split('_');
-      var type = data[0];
-      var id = parseInt(data[1]);
-      switch (type) {
-        case 'app':
-          renderApp(id);
-          break;
-        case 'org':
-          renderOrganization(id);
-          break;
-        default:
-          alert('Wrong select type: ' + type);
-      }
+    })
+    .then(function() {
+      initWidgetState();
     });
-  })
-  .then(function(){
-    initWidgetState();
-  });
 }
 
 
-Fliplet.Widget.onSaveRequest(function () {
-  Fliplet.Widget.save(getSelectedData()).then(function () {
+Fliplet.Widget.onSaveRequest(function() {
+  Fliplet.Widget.save(getSelectedData()).then(function() {
     Fliplet.Widget.complete();
   });
 });
 
-function uploadFile(){
+function uploadFile() {
   $fileInput.click();
 }
 
@@ -575,14 +601,14 @@ function createFolder() {
     name: folderName
   };
   config[upTo[0].type] = upTo[0].id;
-  if(upTo.length > 1){
-    var item = upTo[upTo.length-1];
+  if (upTo.length > 1) {
+    var item = upTo[upTo.length - 1];
     config[item.type] = item.id;
   }
   Fliplet.Media.Folders.create(config)
-  .then(function (folder) {
-    attachFolder(folder);
-  });
+    .then(function(folder) {
+      attachFolder(folder);
+    });
 }
 
 function attachFolder(folder) {
@@ -599,7 +625,7 @@ $fileInput.on('click', function(e) {
 
 $fileInput.on('change', function(e) {
   var files = e.target.files;
-  if(!files.length) return;
+  if (!files.length) return;
   uploadFiles(files);
   clearFileInput();
 });
@@ -615,15 +641,15 @@ function hideDropZone() {
 
 
 function handleCancel(obj) {
-  if(!isCancelClicked) return;
+  if (!isCancelClicked) return;
   obj.abort();
 }
 
 function uploadFiles(files) {
 
   var formData = new FormData();
-  for(var i = 0; i < files.length; i++){
-    formData.append(''+i, files[i]);
+  for (var i = 0; i < files.length; i++) {
+    formData.append('' + i, files[i]);
   }
 
   var config = {
@@ -635,8 +661,8 @@ function uploadFiles(files) {
   };
 
   config[upTo[0].type] = upTo[0].id;
-  if(upTo.length > 1){
-    var item = upTo[upTo.length-1];
+  if (upTo.length > 1) {
+    var item = upTo[upTo.length - 1];
     config.folderId = item.id;
   }
   isCancelClicked = false;
@@ -644,31 +670,33 @@ function uploadFiles(files) {
   showProgressBar();
 
   Fliplet.Media.Files.upload(config)
-  .then(function (files) {
-    var files = files;
-    if(files.length) {
-      addFilesToCurrentFiles(files);
-    }
-    if (data.autoSelectOnUpload){
-      files.forEach(function(file) {
-        selectFile(file.id);
-      })
-    }
-    hideProgressBar();
+    .then(function(files) {
+      var files = files;
+      if (files.length) {
+        addFilesToCurrentFiles(files);
+      }
+      if (data.autoSelectOnUpload) {
+        files.forEach(function(file) {
+          selectFile(file.id);
+        })
+      }
+      hideProgressBar();
 
-  })
-  .then(function(){}, handleUploadingError);
+    })
+    .then(function() {}, handleUploadingError);
 }
 
 function handleUploadingError(err) {
   hideProgressBar();
-  if(isCancelClicked) return;
+  if (isCancelClicked) return;
   showError();
 }
 
 function showError() {
   $alertWrapper.show();
-  setTimeout(function(){$alertWrapper.hide()}, 3000);
+  setTimeout(function() {
+    $alertWrapper.hide()
+  }, 3000);
 }
 
 function addFilesToCurrentFiles(newFiles) {
@@ -702,7 +730,7 @@ $dropZone.on('drop', function(e) {
   e.preventDefault();
   var dataTransfer = e.originalEvent.dataTransfer;
   var files = dataTransfer.files;
-  if(!files.length) return hideDropZone();
+  if (!files.length) return hideDropZone();
   uploadFiles(files);
 });
 
@@ -740,7 +768,7 @@ function hideProgressBar() {
   $progressBarWrapper.hide();
 }
 
-function moveProgressBar(to){
+function moveProgressBar(to) {
   $progressLine.width(to + '%');
 }
 
