@@ -60,18 +60,21 @@ var extensionDictionary = {
     'pdf',
     'doc',
     'docx',
-    'key',
+    'keynote',
+    'ppx',
     'ppt',
-    'odt',
+    'pptx',
+    'txt',
     'xls',
-    'xlsx',
-    'pptx'
+    'xlsx'
+
   ],
   'video': [
     'mov',
-    'mpeg4',
     'mp4',
     'avi',
+    'mpeg',
+    'mpg',
     'wmv',
     'flv',
     '3gpp',
