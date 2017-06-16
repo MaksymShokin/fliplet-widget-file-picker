@@ -484,8 +484,20 @@ function initDropDownState(id) {
 
 function defaultInitWidgetState() {
   forceDropDownInit = false;
-  var value = apps.length ? 'app_' + apps[0].id : 'org_' + organizations[0].id;
-  initDropDownState(value);
+
+  if (apps.find(function(app){
+    return app.id === Fliplet.Env.get('appId');
+  })) {
+    initDropDownState('app_' + Fliplet.Env.get('appId'));
+    return;
+  }
+
+  if (apps.length) {
+    initDropDownState('app_' + apps[0].id);
+    return;
+  }
+
+  initDropDownState('org_' + organizations[0].id);
 }
 
 function initWidgetState() {
