@@ -29,8 +29,8 @@ html.provider-inline body {
 
 .holder {
   position: relative;
+  width: 100%;
   min-height: 135px;
-  min-width: 340px;
 }
 /*BUTTONS*/
 .btn {
@@ -80,12 +80,8 @@ a {
 }
 
 #app {
-  height: 100vh;
-  overflow: hidden;
-  max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  height: 100%;
+  overflow: auto;
 }
 
 html.provider-inline #app {
@@ -282,9 +278,9 @@ header a {
 }
 
 .image-library .item-holder {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 15px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 15px;
 }
 
 .image-holder {
@@ -350,8 +346,8 @@ header a {
 }
 
 .image-title {
-  font-size: 12px;
-  margin-top: 3px;
+  font-size: 11px;
+  margin-top: 1px;
   word-break: break-word;
 }
 
@@ -453,16 +449,26 @@ header a {
   margin-right: 0;
 }
 
-#app .select-proxy-display {
-  margin-bottom: 20px;
-}
-
 .what-to-add-selector {
   position: relative;
 }
 
 .what-to-add-selector .has-bottom-border {
-  min-height: 63px;
+  min-height: 46px;
+}
+
+.drop-note {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.drop-note span {
+  display: inline-block;
+  background-color: #E3E9EB;
+  padding: 0 6px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .add-btn {
@@ -584,8 +590,4 @@ header a {
   content: "";
   display: block;
   margin-bottom: 110px;
-}
-
-.image-library {
-  margin: 20px 0;
 }
