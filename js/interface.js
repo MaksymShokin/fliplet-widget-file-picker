@@ -486,8 +486,20 @@ function initDropDownState(id) {
 
 function defaultInitWidgetState() {
   forceDropDownInit = false;
-  var value = apps.length ? 'app_' + apps[0].id : 'org_' + organizations[0].id;
-  initDropDownState(value);
+
+  if (apps.find(function(app){
+    return app.id === Fliplet.Env.get('appId');
+  })) {
+    initDropDownState('app_' + Fliplet.Env.get('appId'));
+    return;
+  }
+
+  if (apps.length) {
+    initDropDownState('app_' + apps[0].id);
+    return;
+  }
+
+  initDropDownState('org_' + organizations[0].id);
 }
 
 function initWidgetState() {
@@ -531,29 +543,35 @@ function init() {
       getApps()
     ])
     .then(function(values) {
-      //organisations
+      let dropDownHtml = [];
+
+      // Organisations
       if (values[0].length) {
-        $fileDropDown.append('<option value="" disabled>--- Organisations ---</option>');
+        dropDownHtml.push('<optgroup label="--- Organisations ---">');
         values[0].sort(sortByName).forEach(function(organisation) {
-          $fileDropDown.append('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
+          dropDownHtml.push('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
           organizations.push({
             id: organisation.id,
             name: organisation.name
           });
         });
+        dropDownHtml.push('</optgroup>');
       }
 
-      //apps
+      // Apps
       if (values[1].length) {
-        $fileDropDown.append('<option value="" disabled>--- Apps ---</option>');
+        dropDownHtml.push('<optgroup label="--- Apps ---">');
         values[1].sort(sortByName).forEach(function(app) {
-          $fileDropDown.append('<option value="app_' + app.id + '">' + app.name + '</option>');
+          dropDownHtml.push('<option value="app_' + app.id + '">' + app.name + '</option>');
           apps.push({
             id: app.id,
             name: app.name
           });
         });
+        dropDownHtml.push('</optgroup>');
       }
+
+      $fileDropDown.append(dropDownHtml.join(''));
 
       // Removes disabled attribute to allow the user to use the drop-down
 
