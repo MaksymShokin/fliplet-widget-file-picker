@@ -422,11 +422,6 @@ header a {
   color: white;
 }
 
-.has-bottom-border {
-  border-bottom: 1px solid #E3E9EB;
-  padding-bottom: 15px;
-}
-
 .drop-zone-container {
   position: relative;
   min-height: 300px;
@@ -455,6 +450,7 @@ header a {
 
 .what-to-add-selector .has-bottom-border {
   min-height: 46px;
+  border-bottom: 1px solid #E3E9EB;
 }
 
 .drop-note {
