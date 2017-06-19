@@ -86,7 +86,7 @@ var extensionDictionary = {
 
 
 $('[data-toggle="tooltip"]').tooltip();
-$('#browser-label').text('Browser ' + (data.type === 'folder' ? 'folders' : 'files') + ' in');
+$('#browser-label').text('Browse ' + (data.type === 'folder' ? 'folders' : 'files') + ' in');
 
 var validExtensions = [];
 Object.keys(extensionDictionary).forEach(function(key) {
@@ -487,9 +487,9 @@ function initDropDownState(id) {
 function defaultInitWidgetState() {
   forceDropDownInit = false;
 
-  if (apps.find(function(app){
-    return app.id === Fliplet.Env.get('appId');
-  })) {
+  if (apps.find(function(app) {
+      return app.id === Fliplet.Env.get('appId');
+    })) {
     initDropDownState('app_' + Fliplet.Env.get('appId'));
     return;
   }
