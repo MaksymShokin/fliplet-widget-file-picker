@@ -1,82 +1,85 @@
+<div id="app">
+  <div class="menu-fixed">
+    <header>
+      <p>File picker</p>
+      <a id="help_tip" href="#">Need help?</a>
+    </header>
 
-
-    <div id="app">
-        <div class="menu-fixed">
-            <header>
-                <p>File picker</p>
-                <a id="help_tip" href="#">Need help?</a>
-            </header>
-
-            <div class="form-group clearfix">
-                <div class="col-sm-4 control-label">
-                    <label id="browser-label" data-content></label>
-                </div>
-                <div class="col-sm-8">
-                    <label for="drop-down-file-source" class="select-proxy-display">
-                        <span class="icon fa fa-chevron-down"></span>
-                        <span class="select-value-proxy">Please wait...</span>
-                        <select id="drop-down-file-source" data-label="select" class="hidden-select form-control" disabled></select>
-                    </label>
-                </div>
-                <div class="what-to-add-selector col-sm-12">
-                    <div class="form-group clearfix has-bottom-border">
-                        <div class="col-sm-3">
-                            <div class="gallery-tool clearfix">
-                                <!-- BACK BUTTON ONLY SHOWS WHEN THE USER NAVIGATES INSIDE A FOLDER -->
-                                <div class="back-btn fa-rotate-180"
-                                        data-toggle="tooltip" data-placement="bottom" title="Back">
-                                    &nbsp;
-                                </div>
-                                <div class="helper">Root</div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 col-sm-offset-7 col-static">
-                            <div class="dropdown add-btn">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="add-drop-down-menu">
-                                    Add
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right" id="add-menu">
-                                    <li class="add-option" id="actionNewFolder"><a href="#">New folder</a></li>
-                                    <li class="add-option" id="actionUploadFile"><a href="#">Upload file</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="form-group clearfix">
+      <div class="col-sm-4 control-label">
+        <label id="browser-label" data-content></label>
+      </div>
+      <div class="col-sm-8">
+        <label for="drop-down-file-source" class="select-proxy-display">
+          <span class="icon fa fa-chevron-down"></span>
+          <span class="select-value-proxy">Please wait...</span>
+          <select id="drop-down-file-source" data-label="select" class="hidden-select form-control" disabled></select>
+        </label>
+      </div>
+      <div class="what-to-add-selector col-sm-12">
+        <div class="form-group clearfix has-bottom-border">
+          <div class="col-sm-3">
+            <div class="gallery-tool clearfix">
+              <!-- BACK BUTTON ONLY SHOWS WHEN THE USER NAVIGATES INSIDE A FOLDER -->
+              <div class="back-btn fa-rotate-180" data-toggle="tooltip" data-placement="bottom" title="Back">
+                &nbsp;
+              </div>
+              <div class="helper">Root</div>
             </div>
-    </div>
-
-    <div class="holder">
-        <div class="image-library">
-        </div>
-        <div class="spinner-holder hidden">
-            <div class="spinner-overlay">Loading...</div>
-            <p>Loading...</p>
-        </div>
-    </div>
-    </div>
-
-    <div class="drop-zone-wrapper">
-        <div class="drop-zone transparent" id="drop-zone" >
-            <div class="drop-zone-title">
-                <h1>Drag'n'drop your file</h1>
+          </div>
+          <div class="col-sm-2 col-sm-offset-7 col-static">
+            <div class="dropdown add-btn">
+              <button class="btn btn-link dropdown-toggle" type="button" id="add-drop-down-menu">
+                Add <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" id="add-menu">
+                <li class="add-option" id="actionNewFolder"><a href="#">New folder</a></li>
+                <li class="add-option" id="actionUploadFile"><a href="#">Upload file</a></li>
+              </ul>
             </div>
-            <div>
-                <input type="file" id="upload-file" style="display: none;" multiple/>
-            </div>
+          </div>
         </div>
+      </div>
+      <div class="drop-note">
+        <span>Drop files here to upload</span>
+      </div>
     </div>
+  </div>
 
-    <div id="progress-bar-wrapper">
-        <div><p>Uploading...</p></div>
-        <div id="progress-bar"><div id="progress-line"></div></div>
-        <div class="cancel-btn-wrapper">
-            <p id="cancel-upload">Cancel</p>
-        </div>
+  <div class="holder container-fluid">
+    <div class="image-library">
     </div>
+    <div class="spinner-holder hidden">
+      <div class="spinner-overlay">Loading...</div>
+      <p>Loading...</p>
+    </div>
+  </div>
+</div>
 
-    <div id="alert-wrapper" style="display: none;">
-        <h3 id="alert-title">Error uploading file.</h3>
-        <p id="alert-message">There was an error while uploading your file. Please try again.</p>
+<div class="drop-zone-wrapper">
+  <div class="drop-zone transparent" id="drop-zone">
+    <div class="drop-zone-title">
+      <h1>Drag'n'drop your file</h1>
     </div>
+    <div>
+      <input type="file" id="upload-file" style="display: none;" multiple/>
+    </div>
+  </div>
+</div>
+
+<div id="progress-bar-wrapper">
+  <div>
+    <p>Uploading...</p>
+  </div>
+  <div id="progress-bar">
+    <div id="progress-line"></div>
+  </div>
+  <div class="cancel-btn-wrapper">
+    <p id="cancel-upload">Cancel</p>
+  </div>
+</div>
+
+<div id="alert-wrapper" style="display: none;">
+  <h3 id="alert-title">Error uploading file.</h3>
+  <p id="alert-message">There was an error while uploading your file. Please try again.</p>
+</div>

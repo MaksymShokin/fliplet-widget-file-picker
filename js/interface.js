@@ -1,3 +1,5 @@
+document.documentElement.classList.add('provider-' + Fliplet.Env.get('providerMode'));
+
 var $imagesContainer = $('.image-library');
 var $fileDropDown = $('#drop-down-file-source');
 var $dropZone = $('#drop-zone');
@@ -597,6 +599,8 @@ function init() {
     .then(function() {
       initWidgetState();
     });
+
+  Fliplet.Widget.autosize();
 }
 
 
