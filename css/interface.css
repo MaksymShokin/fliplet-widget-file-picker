@@ -399,8 +399,8 @@ header a {
 }
 
 .drop-zone {
-  background: rgba(102, 178, 255, 0.5);
-  border: 2px dashed blue;
+  background: rgba(255, 255, 255, 0.70);
+  border: 2px dashed #00abd2;
   text-align: center;
   cursor: pointer;
   position: fixed;
@@ -408,18 +408,18 @@ header a {
   height: 100%;
   top: 0;
   display: none;
-  z-index: 99999999;
+  z-index: 9999;
+  padding-top: 20%;
 }
 
 .drop-zone-title {
-  background: rgba(102, 178, 255, 0.8);
   width: 75%;
   margin: auto;
   pointer-events: none;
 }
 
 .drop-zone-title h1 {
-  color: white;
+  color: #00abd2;
 }
 
 .drop-zone-container {
