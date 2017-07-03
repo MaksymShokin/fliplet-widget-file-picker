@@ -226,15 +226,51 @@ function openOrganization(organizationId) {
 }
 
 function getFolderAndFiles(filter) {
+  // Default filter functions
+  var filterFiles = function(files) {
+    return true;
+  };
+  var filterFolders = function(folders) {
+    return true;
+  };
+
+  if (Object.keys(filter).indexOf('appId') > -1) {
+    // Filter functions
+    filterFiles = function(file) {
+      return !file.mediaFolderId;
+    };
+    filterFolders = function(folder) {
+      return !folder.parentFolderId;
+    };
+  } else if (Object.keys(filter).indexOf('organizationId') > -1) {
+
+    // Filter functions
+    filterFiles = function(file) {
+      return !(file.appId || file.mediaFolderId);
+    };
+    filterFolders = function(folder) {
+      return !(folder.appId || folder.parentFolderId);
+    };
+  }
+
+  function filterResponse(response) {
+    // Filter only the files from that request app/org/folder
+    var files = response.files.filter(filterFiles);
+    var folders = response.folders.filter(filterFolders);
+
+    return Promise.resolve({ files: files, folders: folders });
+  }
+
+
   return Promise.all([
     Fliplet.Media.Folders.get(Object.assign({}, {
       type: 'folders'
-    }, filter)),
+    }, filter)).then(filterResponse),
     Fliplet.Media.Folders.get(Object.assign({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
         return type.toLowerCase();
       }).join(',') : data.type
-    }, filter))
+    }, filter)).then(filterResponse)
   ])
 }
 
