@@ -258,7 +258,10 @@ function getFolderAndFiles(filter) {
     var files = response.files.filter(filterFiles);
     var folders = response.folders.filter(filterFolders);
 
-    return Promise.resolve({ files: files, folders: folders });
+    return Promise.resolve({
+      files: files,
+      folders: folders
+    });
   }
 
 
@@ -517,7 +520,7 @@ function updatePaths() {
 function initDropDownState(id) {
   $fileDropDown.prop('disabled', '');
   $fileDropDown.val(id);
-  $fileDropDown.trigger('change');
+  $fileDropDown.selectpicker('refresh');
 }
 
 function defaultInitWidgetState() {

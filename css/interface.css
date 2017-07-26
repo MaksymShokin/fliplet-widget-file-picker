@@ -16,7 +16,7 @@ html.provider-inline body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,52 +31,6 @@ html.provider-inline body {
   position: relative;
   width: 100%;
   min-height: 135px;
-}
-/*BUTTONS*/
-.btn {
-  border-radius: 6px;
-  line-height: 44px;
-  padding: 0 15px;
-  border: none;
-}
-
-.btn-default {
-  color: #333;
-  background-color: #e4e9eb;
-  border-bottom: 2px solid #cfd3d5;
-}
-
-.btn-default:active,
-.btn-default:active:focus,
-.btn-default:active:hover,
-.btn-default:focus,
-.btn-default:hover {
-  color: #333;
-  background-color: #cfd3d5;
-  border-color: #cfd3d5;
-  outline: none;
-}
-
-.btn-primary {
-  color: #FFF;
-  background-color: #00abd2;
-  border-bottom: 2px solid #0087a6;
-}
-
-.btn-primary:active,
-.btn-primary:active:focus,
-.btn-primary:active:hover,
-.btn-primary:focus,
-.btn-primary:hover {
-  color: #FFF;
-  background-color: #0087a6;
-  border-color: #0087a6;
-  outline: none;
-}
-
-.btn-link,
-a {
-  color: #00abd2;
 }
 
 #app {
@@ -210,7 +164,7 @@ header a {
   margin: 0;
 }
 
-.titles p + p {
+.titles p+p {
   font-weight: normal;
   font-size: 0.8em;
   margin: 0.8em 0 0;
@@ -387,12 +341,12 @@ header a {
 .image-library .folder .image-overlay {
   opacity: 1;
 }
+
 @media only screen and (min-width: 488px) {
   .titles,
   header {
     font-size: 1.0em;
   }
-
   .image-drop-zone p {
     font-size: 1.12em;
   }
@@ -499,7 +453,7 @@ header a {
   width: 98%;
   position: fixed;
   top: 25%;
-  background: rgba(251,224,149,0.8);
+  background: rgba(251, 224, 149, 0.8);
   text-align: center;
   margin-left: 1%;
 }
@@ -512,7 +466,7 @@ header a {
 #progress-line {
   width: 1%;
   height: 30px;
-  background-color: rgb(34,156,183);
+  background-color: rgb(34, 156, 183);
   margin-bottom: 5px;
 }
 
@@ -525,7 +479,7 @@ header a {
 #cancel-upload {
   margin-top: 5px;
   margin-bottom: 5px;
-  color: rgb(34,156,183);
+  color: rgb(34, 156, 183);
   cursor: pointer;
   width: 50px;
 }
@@ -564,6 +518,7 @@ header a {
 .image-overlay .fa {
   font-size: 50px;
 }
+
 @media (min-width: 400px) {
   .image-overlay .fa {
     font-size: 65px;

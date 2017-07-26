@@ -11,7 +11,8 @@
       "lodash",
       "fliplet-studio-ui",
       "fliplet-media",
-      "bootstrap"
+      "bootstrap",
+      "bootstrap-select"
     ],
     "assets": [
       "js/interface.templates.js",
