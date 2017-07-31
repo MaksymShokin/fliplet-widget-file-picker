@@ -544,6 +544,7 @@ function initWidgetState() {
   }
   defaultInitWidgetState();
 
+  $fileDropDown.trigger('change');
 }
 
 function renderApp(id) {
