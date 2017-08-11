@@ -111,7 +111,24 @@ function getFilteredType(extension) {
 }
 
 function getFileTemplate(file) {
-  var extension = (file.thumbnail || file.url).split('.').pop();
+  var extension;
+
+  if (file.contentType) {
+    switch (file.contentType.toLowerCase()) {
+      case 'image/jpeg':
+      case 'image/jpg':
+        extension = 'jpg';
+        break;
+      case 'image/gif':
+        extension = 'gif';
+        break;
+      case 'image/png':
+        extension = 'png';
+        break;
+    }
+  }
+
+  extension = extension || (file.thumbnail || file.url).split('.').pop();
 
   file.ext = extension;
   var type = getFilteredType(extension);
@@ -119,7 +136,7 @@ function getFileTemplate(file) {
   var template;
   switch (type) {
     case 'image':
-      file.urlSmall = Fliplet.Env.get('apiUrl') + 'v1/media/files/' + file.id + '/contents?size=small';
+      file.urlSmall = file.thumbnail || Fliplet.Env.get('apiUrl') + 'v1/media/files/' + file.id + '/contents?size=small';
       template = templates.image(file);
       break;
     case 'video':
