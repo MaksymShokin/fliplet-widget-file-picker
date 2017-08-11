@@ -128,7 +128,7 @@ function getFileTemplate(file) {
     }
   }
 
-  extension = extension || (file.thumbnail || file.url).split('.').pop();
+  extension = extension || file.url.split('.').pop();
 
   file.ext = extension;
   var type = getFilteredType(extension);
