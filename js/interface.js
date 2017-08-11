@@ -111,7 +111,7 @@ function getFilteredType(extension) {
 }
 
 function getFileTemplate(file) {
-  var extension = file.url.split('.').pop();
+  var extension = (file.thumbnail || file.url).split('.').pop();
 
   file.ext = extension;
   var type = getFilteredType(extension);
