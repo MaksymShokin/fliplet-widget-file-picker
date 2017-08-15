@@ -275,7 +275,10 @@ function getFolderAndFiles(filter) {
     var files = response.files.filter(filterFiles);
     var folders = response.folders.filter(filterFolders);
 
-    return Promise.resolve({ files: files, folders: folders });
+    return Promise.resolve({
+      files: files,
+      folders: folders
+    });
   }
 
 
@@ -597,32 +600,38 @@ function init() {
       getApps()
     ])
     .then(function(values) {
+      var userOrganisations = values[0];
+      var userApps = values[1];
       let dropDownHtml = [];
 
+      var thisOrganisation = _.find(userOrganisations, function(org) {
+        return org.id === Fliplet.Env.get('organizationId');
+      });
+
+      var thisApp = _.find(userApps, function(app) {
+        return app.id === Fliplet.Env.get('appId');
+      });
+
       // Organisations
-      if (values[0].length) {
-        dropDownHtml.push('<optgroup label="--- Organisations ---">');
-        values[0].sort(sortByName).forEach(function(organisation) {
-          dropDownHtml.push('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
-          organizations.push({
-            id: organisation.id,
-            name: organisation.name
-          });
-        });
+      if (thisOrganisation) {
+        dropDownHtml.push('<optgroup label="--- Organisation ---">');
+        dropDownHtml.push('<option value="org_' + thisOrganisation.id + '">' + thisOrganisation.name + '</option>');
         dropDownHtml.push('</optgroup>');
+        organizations.push({
+          id: thisOrganisation.id,
+          name: thisOrganisation.name
+        });
       }
 
       // Apps
-      if (values[1].length) {
-        dropDownHtml.push('<optgroup label="--- Apps ---">');
-        values[1].sort(sortByName).forEach(function(app) {
-          dropDownHtml.push('<option value="app_' + app.id + '">' + app.name + '</option>');
-          apps.push({
-            id: app.id,
-            name: app.name
-          });
-        });
+      if (thisApp) {
+        dropDownHtml.push('<optgroup label="--- App ---">');
+        dropDownHtml.push('<option value="app_' + thisApp.id + '">' + thisApp.name + '</option>');
         dropDownHtml.push('</optgroup>');
+        apps.push({
+          id: thisApp.id,
+          name: thisApp.name
+        });
       }
 
       $fileDropDown.append(dropDownHtml.join(''));
@@ -649,6 +658,8 @@ function init() {
             alert('Wrong select type: ' + type);
         }
       });
+
+      return Promise.resolve();
     })
     .then(function() {
       initWidgetState();
