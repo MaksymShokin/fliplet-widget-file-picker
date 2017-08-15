@@ -359,16 +359,14 @@ function selectItems(items) {
 function restoreRoot(appId, organizationId) {
   forceDropDownInit = true;
   var backItem;
-  if (appId && _.find(apps, ['id', appId])) {
-    backItem = _.find(apps, ['id', appId]);
+  if (appId && backItem = _.find(apps, ['id', appId])) {
     backItem.back = function() {
       return openApp(appId);
     };
     backItem.name = 'Root';
     backItem.type = 'appId';
     initDropDownState('app_' + appId);
-  } else if (organizationId && _.find(organizations, ['id', organizationId])) {
-    backItem = _.find(organizations, ['id', organizationId]);
+  } else if (organizationId && backItem = _.find(organizations, ['id', organizationId])) {
     backItem.back = function() {
       return openOrganization(organizationId);
     };
