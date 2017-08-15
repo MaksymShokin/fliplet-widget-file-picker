@@ -676,7 +676,9 @@ function createFolder() {
   var config = {
     name: folderName
   };
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config[item.type] = item.id;
@@ -736,7 +738,9 @@ function uploadFiles(files) {
     }
   };
 
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config.folderId = item.id;
