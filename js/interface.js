@@ -359,7 +359,7 @@ function selectItems(items) {
 function restoreRoot(appId, organizationId) {
   forceDropDownInit = true;
   var backItem;
-  if (appId) {
+  if (appId && _.find(apps, ['id', appId])) {
     backItem = _.find(apps, ['id', appId]);
     backItem.back = function() {
       return openApp(appId);
@@ -367,7 +367,7 @@ function restoreRoot(appId, organizationId) {
     backItem.name = 'Root';
     backItem.type = 'appId';
     initDropDownState('app_' + appId);
-  } else if (organizationId) {
+  } else if (organizationId && _.find(organizations, ['id', organizationId])) {
     backItem = _.find(organizations, ['id', organizationId]);
     backItem.back = function() {
       return openOrganization(organizationId);
@@ -376,7 +376,9 @@ function restoreRoot(appId, organizationId) {
     backItem.type = 'organizationId';
     initDropDownState('org_' + organizationId);
   }
-  upTo.unshift(backItem);
+  if (backItem) {
+    upTo.unshift(backItem);
+  }
 
   return Promise.resolve();
 }
