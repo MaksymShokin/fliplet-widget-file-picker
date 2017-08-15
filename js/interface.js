@@ -359,16 +359,14 @@ function selectItems(items) {
 function restoreRoot(appId, organizationId) {
   forceDropDownInit = true;
   var backItem;
-  if (appId) {
-    backItem = _.find(apps, ['id', appId]);
+  if (appId && backItem = _.find(apps, ['id', appId])) {
     backItem.back = function() {
       return openApp(appId);
     };
     backItem.name = 'Root';
     backItem.type = 'appId';
     initDropDownState('app_' + appId);
-  } else if (organizationId) {
-    backItem = _.find(organizations, ['id', organizationId]);
+  } else if (organizationId && backItem = _.find(organizations, ['id', organizationId])) {
     backItem.back = function() {
       return openOrganization(organizationId);
     };
@@ -376,7 +374,9 @@ function restoreRoot(appId, organizationId) {
     backItem.type = 'organizationId';
     initDropDownState('org_' + organizationId);
   }
-  upTo.unshift(backItem);
+  if (backItem) {
+    upTo.unshift(backItem);
+  }
 
   return Promise.resolve();
 }
@@ -676,7 +676,9 @@ function createFolder() {
   var config = {
     name: folderName
   };
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config[item.type] = item.id;
@@ -736,7 +738,9 @@ function uploadFiles(files) {
     }
   };
 
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config.folderId = item.id;
