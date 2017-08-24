@@ -110,7 +110,7 @@ function getFilteredType(extension) {
   return (type === data.type || data.type === '') ? type : 'others';
 }
 
-function getFileTemplate(file) {
+function getExtensionFromFile(file) {
   var extension;
 
   if (file.contentType) {
@@ -128,7 +128,13 @@ function getFileTemplate(file) {
     }
   }
 
-  extension = extension || file.url.split('.').pop();
+  extension = extension || file.url.split('.').pop().toLowerCase();
+
+  return extension;
+}
+
+function getFileTemplate(file) {
+  var extension = getExtensionFromFile(file);
 
   file.ext = extension;
   var type = getFilteredType(extension);
@@ -317,7 +323,7 @@ function selectFile(id) {
     return file.id === id;
   });
   if (!file) return;
-  if (!extensionClickFilter(file.url.split('.').pop())) return;
+  if (!extensionClickFilter(file)) return;
 
   var isSelected = !file.selected;
   if (!data.selectMultiple) unselectAll();
@@ -471,7 +477,6 @@ function onFolderDbClick(e) {
 
   // Open
   openFolder(id);
-
 }
 
 function onFileClick(e) {
@@ -480,16 +485,13 @@ function onFileClick(e) {
   selectFile($el.data('file-id'));
 }
 
-
-function extensionClickFilter(extension) {
-  var type = getFilteredType(extension);
+function extensionClickFilter(file) {
+  var type = getFilteredType(getExtensionFromFile(file));
 
   if ((!data.type || data.type === type) && type != 'others')
     return true;
   return false;
 }
-
-
 
 $('.back-btn').click(function() {
   if (upTo.length === 0) {
