@@ -561,11 +561,14 @@ function defaultInitWidgetState() {
 
 function initWidgetState() {
   if (data.selectFiles.length) {
-    return restoreWidgetState();
+    restoreWidgetState();
+  } else {
+    defaultInitWidgetState();
   }
-  defaultInitWidgetState();
-
+  
   $fileDropDown.trigger('change');
+
+  return Promise.resolve();
 }
 
 function renderApp(id) {
