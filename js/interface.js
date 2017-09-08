@@ -110,7 +110,7 @@ function getFilteredType(extension) {
   return (type === data.type || data.type === '') ? type : 'others';
 }
 
-function getFileTemplate(file) {
+function getExtensionFromFile(file) {
   var extension;
 
   if (file.contentType) {
@@ -128,7 +128,13 @@ function getFileTemplate(file) {
     }
   }
 
-  extension = extension || file.url.split('.').pop();
+  extension = extension || file.url.split('.').pop().toLowerCase();
+
+  return extension;
+}
+
+function getFileTemplate(file) {
+  var extension = getExtensionFromFile(file);
 
   file.ext = extension;
   var type = getFilteredType(extension);
@@ -201,8 +207,8 @@ function getApps() {
 function getOrganizations() {
   return Fliplet.Organizations
     .get()
-    .then(function(organisations) {
-      return organisations
+    .then(function(organizations) {
+      return organizations
     })
 }
 
@@ -320,7 +326,7 @@ function selectFile(id) {
     return file.id === id;
   });
   if (!file) return;
-  if (!extensionClickFilter(file.url.split('.').pop())) return;
+  if (!extensionClickFilter(file)) return;
 
   var isSelected = !file.selected;
   if (!data.selectMultiple) unselectAll();
@@ -362,7 +368,7 @@ function selectItems(items) {
 function restoreRoot(appId, organizationId) {
   forceDropDownInit = true;
   var backItem;
-  if (appId) {
+  if (appId && _.find(apps, ['id', appId])) {
     backItem = _.find(apps, ['id', appId]);
     backItem.back = function() {
       return openApp(appId);
@@ -370,7 +376,7 @@ function restoreRoot(appId, organizationId) {
     backItem.name = 'Root';
     backItem.type = 'appId';
     initDropDownState('app_' + appId);
-  } else if (organizationId) {
+  } else if (organizationId && _.find(organizations, ['id', organizationId])) {
     backItem = _.find(organizations, ['id', organizationId]);
     backItem.back = function() {
       return openOrganization(organizationId);
@@ -379,7 +385,9 @@ function restoreRoot(appId, organizationId) {
     backItem.type = 'organizationId';
     initDropDownState('org_' + organizationId);
   }
-  upTo.unshift(backItem);
+  if (backItem) {
+    upTo.unshift(backItem);
+  }
 
   return Promise.resolve();
 }
@@ -472,7 +480,6 @@ function onFolderDbClick(e) {
 
   // Open
   openFolder(id);
-
 }
 
 function onFileClick(e) {
@@ -481,16 +488,13 @@ function onFileClick(e) {
   selectFile($el.data('file-id'));
 }
 
-
-function extensionClickFilter(extension) {
-  var type = getFilteredType(extension);
+function extensionClickFilter(file) {
+  var type = getFilteredType(getExtensionFromFile(file));
 
   if ((!data.type || data.type === type) && type != 'others')
     return true;
   return false;
 }
-
-
 
 $('.back-btn').click(function() {
   if (upTo.length === 0) {
@@ -560,11 +564,14 @@ function defaultInitWidgetState() {
 
 function initWidgetState() {
   if (data.selectFiles.length) {
-    return restoreWidgetState();
+    restoreWidgetState();
+  } else {
+    defaultInitWidgetState();
   }
-  defaultInitWidgetState();
 
   $fileDropDown.trigger('change');
+
+  return Promise.resolve();
 }
 
 function renderApp(id) {
@@ -687,7 +694,9 @@ function createFolder() {
   var config = {
     name: folderName
   };
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config[item.type] = item.id;
@@ -747,7 +756,9 @@ function uploadFiles(files) {
     }
   };
 
-  config[upTo[0].type] = upTo[0].id;
+  if (upTo.length && upTo[0].type) {
+    config[upTo[0].type] = upTo[0].id;
+  }
   if (upTo.length > 1) {
     var item = upTo[upTo.length - 1];
     config.folderId = item.id;
