@@ -207,8 +207,8 @@ function getApps() {
 function getOrganizations() {
   return Fliplet.Organizations
     .get()
-    .then(function(organisations) {
-      return organisations
+    .then(function(organizations) {
+      return organizations
     })
 }
 
@@ -606,14 +606,14 @@ function init() {
     .then(function(values) {
       let dropDownHtml = [];
 
-      // Organisations
+      // Organizations
       if (values[0].length) {
-        dropDownHtml.push('<optgroup label="--- Organisations ---">');
-        values[0].sort(sortByName).forEach(function(organisation) {
-          dropDownHtml.push('<option value="org_' + organisation.id + '">' + organisation.name + '</option>');
+        dropDownHtml.push('<optgroup label="--- Organizations ---">');
+        values[0].sort(sortByName).forEach(function(organization) {
+          dropDownHtml.push('<option value="org_' + organization.id + '">' + organization.name + '</option>');
           organizations.push({
-            id: organisation.id,
-            name: organisation.name
+            id: organization.id,
+            name: organization.name
           });
         });
         dropDownHtml.push('</optgroup>');
