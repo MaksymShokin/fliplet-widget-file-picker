@@ -384,6 +384,8 @@ function restoreRoot(appId, organizationId) {
     backItem.name = 'Root';
     backItem.type = 'organizationId';
     initDropDownState('org_' + organizationId);
+  } else {
+    initDropDownState();
   }
   if (backItem) {
     upTo.unshift(backItem);
@@ -540,8 +542,10 @@ function updatePaths() {
 
 function initDropDownState(id) {
   $fileDropDown.prop('disabled', '');
-  $fileDropDown.val(id);
-  $fileDropDown.trigger('change');
+  if (id) {
+    $fileDropDown.val(id);
+    $fileDropDown.trigger('change');
+  }
 }
 
 function defaultInitWidgetState() {
