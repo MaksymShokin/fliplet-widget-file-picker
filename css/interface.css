@@ -294,6 +294,26 @@ header a {
   background-color: #FFFFFF;
 }
 
+.image-holder .delete-file,
+.image-holder .delete-folder {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background-color: #a94442;
+  color: #ffffff;
+  display: none;
+}
+
+.image-holder:hover .delete-file,
+.image-holder:hover .delete-folder {
+  display: block;
+}
+
 .image-overlay {
   position: absolute;
   top: 0;

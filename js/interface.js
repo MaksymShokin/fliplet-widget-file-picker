@@ -189,6 +189,32 @@ $('#actionNewFolder')
 $('#actionUploadFile')
   .on('click', uploadFile);
 
+$(document)
+  .on('click', '.delete-file', function() {
+    var fileID = $(this).parents('.item-holder').data('file-id');
+    var $elementToDelete = $(this).parents('.item-holder');
+
+    var alertConfirmation = confirm("Are you sure you want to delete the file?");
+
+    if (alertConfirmation) {
+      Fliplet.Media.Files.delete(fileID).then(function() {
+        $elementToDelete.remove();
+      });
+    }
+  })
+  .on('click', '.delete-folder', function() {
+    var folderID = $(this).parents('.item-holder').data('folder-id');
+    var $elementToDelete = $(this).parents('.item-holder');
+    
+    var alertConfirmation = confirm("Are you sure you want to delete the folder?");
+
+    if (alertConfirmation) {
+      Fliplet.Media.Folders.delete(folderID).then(function() {
+        $elementToDelete.remove();
+      });
+    }
+  })
+
 function sortByName(item1, item2) {
   return byLowerCaseName(item1) > byLowerCaseName(item2);
 }
