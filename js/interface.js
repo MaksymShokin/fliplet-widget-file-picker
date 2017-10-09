@@ -315,10 +315,10 @@ function getFolderAndFiles(filter) {
 
 
   return Promise.all([
-    Fliplet.Media.Folders.get(Object.assign({}, {
+    Fliplet.Media.Folders.get($.extend({}, {
       type: 'folders'
     }, filter)).then(filterResponse),
-    Fliplet.Media.Folders.get(Object.assign({}, {
+    Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
         return type.toLowerCase();
       }).join(',') : data.type
