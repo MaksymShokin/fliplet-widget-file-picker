@@ -1,6 +1,5 @@
 body,
 html {
-  height: 100%;
   overflow: hidden;
 }
 
@@ -80,7 +79,6 @@ a {
 }
 
 #app {
-  height: 100%;
   overflow: auto;
 }
 
