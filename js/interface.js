@@ -12,6 +12,7 @@ var $progressLine = $('#progress-line');
 var $progressBarWrapper = $('#progress-bar-wrapper');
 var $cancelUploadButton = $('#cancel-upload');
 var $alertWrapper = $('#alert-wrapper');
+var $wrongFileWrapper = $('#wrong-file-wrapper');
 
 var data = Fliplet.Widget.getData() || {};
 
@@ -35,17 +36,60 @@ var apps = [],
   folders = [],
   files = [];
 
-var validType = [
-  'image',
-  'document',
-  'video',
-  'folder'
-];
+var validType = {
+  image: {
+    mimetype: [
+      'image/jpg',
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/x-tiff',
+      'image/tiff'
+    ]
+  },
+  document: {
+    mimetype: [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/x-iwork-keynote-sffkey',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain'
+    ]
+  },
+  video: {
+    mimetype: [
+      'video/quicktime',
+      'video/mp4',
+      'application/x-troff-msvideo',
+      'video/avi',
+      'video/msvideo',
+      'video/x-msvideo',
+      'video/mpeg',
+      'video/x-ms-wmv',
+      'video/x-flv',
+      'video/3gpp',
+      'video/webm'
+    ]
+  },
+  font: {
+    mimetype: [
+      'font/ttf',
+      'application/x-font-ttf',
+      'application/octet-stream',
+      'application/x-font-truetype',
+      'application/x-font-opentype'
+    ]
+  }
+};
 
 var isCancelClicked;
 var forceDropDownInit;
 
-['app', 'image', 'document', 'other', 'video', 'folder', 'organization', 'nofiles']
+['app', 'image', 'document', 'other', 'video', 'font', 'folder', 'organization', 'nofiles']
 .forEach(function(tpl) {
   templates[tpl] = Fliplet.Widget.Templates['templates.' + tpl];
 });
@@ -81,6 +125,10 @@ var extensionDictionary = {
     'flv',
     '3gpp',
     'webm'
+  ],
+  'font': [
+    'ttf',
+    'otf'
   ]
 };
 
@@ -153,6 +201,9 @@ function getFileTemplate(file) {
       break;
     case 'document':
       template = templates.document(file);
+      break;
+    case 'font':
+      template = templates.font(file);
       break;
   }
 
@@ -772,10 +823,35 @@ function handleCancel(obj) {
 }
 
 function uploadFiles(files) {
-
+  var confirmedType;
+  var confirmedExt;
   var formData = new FormData();
   for (var i = 0; i < files.length; i++) {
+    var fileName = files[i].name;
+    var fileType = files[i].type;
+    var dotIndex = fileName.lastIndexOf('.');
+    var extension = fileName.substring(dotIndex);
+
+    confirmedType = _.find(validType[data.type].mimetype, function(type) {
+      return type === files[i].type;
+    });
+
+    if (!confirmedType) {
+      confirmedExt = _.find(extensionDictionary[data.type], function(ext) {
+        return '.' + ext === extension;
+      });
+
+      if (!confirmedExt) {
+        handleUploadingWrongFile();
+        break;
+      }
+    }
+
     formData.append('' + i, files[i]);
+  }
+
+  if (!confirmedType && !confirmedExt) {
+    return;
   }
 
   var config = {
@@ -825,6 +901,19 @@ function showError() {
   setTimeout(function() {
     $alertWrapper.hide()
   }, 3000);
+}
+
+function handleUploadingWrongFile() {
+  hideProgressBar();
+  if (isCancelClicked) return;
+  showWrongFileError();
+}
+
+function showWrongFileError() {
+  $wrongFileWrapper.show();
+  setTimeout(function() {
+    $wrongFileWrapper.hide()
+  }, 5000);
 }
 
 function addFilesToCurrentFiles(newFiles) {
