@@ -290,14 +290,29 @@ header a {
   border-color: #00abd2;
 }
 
-.image-library .folder,
-.image-library .image {
+.image-library .item-holder .image-holder {
   cursor: pointer;
 }
 
 .image-library .folder .image-overlay {
   opacity: 1;
 }
+
+.image-library .checkbox.checkbox-icon input[type="checkbox"] + label {
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.image-library .checkbox.checkbox-icon input[type="checkbox"] + label > span.check {
+  width: 16px;
+  height: 16px;
+}
+
+.image-library .checkbox.checkbox-icon label > span.check > i.fa {
+  top: 1px;
+}
+
 @media only screen and (min-width: 488px) {
   .titles,
   header {

@@ -230,9 +230,10 @@ $('#app')
   });
 
 $('.image-library')
-  .on('click', '.file', onFileClick)
-  .on('click', '[data-folder-id]', onFolderClick)
-  .on('dblclick', '[data-folder-id]', onFolderDbClick);
+  .on('click', '.image-holder.file', onFileClick)
+  .on('click', '.image-holder.folder', onFolderClick)
+  .on('dblclick', '.image-holder.folder', onFolderDbClick)
+  .on('change', '.isOrganizationCheck', onOrganizationCheck);
 
 $('#actionNewFolder')
   .on('click', createFolder);
@@ -409,7 +410,7 @@ function selectFile(id) {
   if (!data.selectMultiple) unselectAll();
   file.selected = isSelected;
 
-  var $el = $('.file[data-file-id=' + id + ']');
+  var $el = $('.item-holder[data-file-id=' + id + ']');
   $el[!!file.selected ? 'addClass' : 'removeClass']('selected');
   emitSelected();
 }
@@ -426,7 +427,7 @@ function selectFolder(id) {
   if (!data.selectMultiple) unselectAll();
   folder.selected = isSelected;
 
-  var $el = $('.folder[data-folder-id=' + id + ']');
+  var $el = $('.item-holder[data-folder-id=' + id + ']');
   $el[!!folder.selected ? 'addClass' : 'removeClass']('selected');
 
   emitSelected();
@@ -539,14 +540,16 @@ function emitSelected() {
 function onFolderClick(e) {
   e.preventDefault();
   var $el = $(this);
-  selectFolder($el.data('folder-id'));
+  var $parent = $el.parents('.item-holder');
+  selectFolder($parent.data('folder-id'));
 }
 
 function onFolderDbClick(e) {
   e.preventDefault();
   var $el = $(this);
+  var $parent = $el.parents('.item-holder');
 
-  var id = $el.data('folder-id');
+  var id = $parent.data('folder-id');
   var backItem;
 
   // Store to nav stack
@@ -564,7 +567,21 @@ function onFolderDbClick(e) {
 function onFileClick(e) {
   e.preventDefault();
   var $el = $(this);
-  selectFile($el.data('file-id'));
+  var $parent = $el.parents('.item-holder');
+  selectFile($parent.data('file-id'));
+}
+
+function onOrganizationCheck(e) {
+  var fileId = $(this).parents('.item-holder').data('file-id');
+  var value = $(this).is(":checked");
+
+  Fliplet.API.request({
+    method: 'PUT',
+    url: 'v1/media/files/' + fileId,
+    data: {
+      isOrganizationMedia: value
+    }
+  });
 }
 
 function extensionClickFilter(file) {
