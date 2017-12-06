@@ -1,5 +1,5 @@
 <div id="app">
-  <div class="menu-fixed">
+  <div class="menu-fixed form-horizontal">
     <header>
       <p>File picker</p>
       <a id="help_tip" href="#">Need help?</a>
@@ -11,9 +11,9 @@
       </div>
       <div class="col-sm-8">
         <label for="drop-down-file-source" class="select-proxy-display">
+          <select id="drop-down-file-source" data-label="select" class="hidden-select form-control" disabled></select>
           <span class="icon fa fa-chevron-down"></span>
           <span class="select-value-proxy">Please wait...</span>
-          <select id="drop-down-file-source" data-label="select" class="hidden-select form-control" disabled></select>
         </label>
       </div>
       <div class="what-to-add-selector col-sm-12">
@@ -37,6 +37,26 @@
                 <li class="add-option" id="actionUploadFile"><a href="#">Upload file</a></li>
               </ul>
             </div>
+          </div>
+          <div id="progress-bar-wrapper">
+            <div id="uploading-wrapper">
+              <p>Uploading...</p>
+            </div>
+            <div id="progress-bar">
+              <div id="progress-line"></div>
+            </div>
+            <div class="cancel-btn-wrapper">
+              <p id="cancel-upload">Cancel</p>
+            </div>
+          </div>
+          <div id="alert-wrapper" style="display: none;">
+            <p id="alert-title">Error uploading file.</p>
+            <p id="alert-message">There was an error while uploading your file. Please try again.</p>
+          </div>
+
+          <div id="wrong-file-wrapper" style="display: none;">
+            <p id="alert-title">Wrong file type.</p>
+            <p id="alert-message">You have uploaded the wrong file type. Please try again.</p>
           </div>
         </div>
       </div>
@@ -65,21 +85,4 @@
       <input type="file" id="upload-file" style="display: none;" multiple/>
     </div>
   </div>
-</div>
-
-<div id="progress-bar-wrapper">
-  <div>
-    <p>Uploading...</p>
-  </div>
-  <div id="progress-bar">
-    <div id="progress-line"></div>
-  </div>
-  <div class="cancel-btn-wrapper">
-    <p id="cancel-upload">Cancel</p>
-  </div>
-</div>
-
-<div id="alert-wrapper" style="display: none;">
-  <h3 id="alert-title">Error uploading file.</h3>
-  <p id="alert-message">There was an error while uploading your file. Please try again.</p>
 </div>

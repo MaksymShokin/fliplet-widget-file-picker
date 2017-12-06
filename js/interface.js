@@ -12,6 +12,7 @@ var $progressLine = $('#progress-line');
 var $progressBarWrapper = $('#progress-bar-wrapper');
 var $cancelUploadButton = $('#cancel-upload');
 var $alertWrapper = $('#alert-wrapper');
+var $wrongFileWrapper = $('#wrong-file-wrapper');
 
 var data = Fliplet.Widget.getData() || {};
 
@@ -35,17 +36,60 @@ var apps = [],
   folders = [],
   files = [];
 
-var validType = [
-  'image',
-  'document',
-  'video',
-  'folder'
-];
+var validType = {
+  image: {
+    mimetype: [
+      'image/jpg',
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/x-tiff',
+      'image/tiff'
+    ]
+  },
+  document: {
+    mimetype: [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/x-iwork-keynote-sffkey',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain'
+    ]
+  },
+  video: {
+    mimetype: [
+      'video/quicktime',
+      'video/mp4',
+      'application/x-troff-msvideo',
+      'video/avi',
+      'video/msvideo',
+      'video/x-msvideo',
+      'video/mpeg',
+      'video/x-ms-wmv',
+      'video/x-flv',
+      'video/3gpp',
+      'video/webm'
+    ]
+  },
+  font: {
+    mimetype: [
+      'font/ttf',
+      'application/x-font-ttf',
+      'application/octet-stream',
+      'application/x-font-truetype',
+      'application/x-font-opentype'
+    ]
+  }
+};
 
 var isCancelClicked;
 var forceDropDownInit;
 
-['app', 'image', 'document', 'other', 'video', 'folder', 'organization', 'nofiles']
+['app', 'image', 'document', 'other', 'video', 'font', 'folder', 'organization', 'nofiles']
 .forEach(function(tpl) {
   templates[tpl] = Fliplet.Widget.Templates['templates.' + tpl];
 });
@@ -81,6 +125,10 @@ var extensionDictionary = {
     'flv',
     '3gpp',
     'webm'
+  ],
+  'font': [
+    'ttf',
+    'otf'
   ]
 };
 
@@ -154,6 +202,9 @@ function getFileTemplate(file) {
     case 'document':
       template = templates.document(file);
       break;
+    case 'font':
+      template = templates.font(file);
+      break;
   }
 
   return template
@@ -162,14 +213,17 @@ function getFileTemplate(file) {
 function addFile(file) {
   file.fullname = file.url.substring(file.url.lastIndexOf('/') + 1);
   $imagesContainer.append(getFileTemplate(file));
+  Fliplet.Widget.autosize();
 }
 
 function addFolder(folder) {
   $imagesContainer.append(templates.folder(folder));
+  Fliplet.Widget.autosize();
 }
 
 function noFiles() {
   $imagesContainer.html(templates.nofiles());
+  Fliplet.Widget.autosize();
 }
 
 // events
@@ -179,9 +233,10 @@ $('#app')
   });
 
 $('.image-library')
-  .on('click', '.file', onFileClick)
-  .on('click', '[data-folder-id]', onFolderClick)
-  .on('dblclick', '[data-folder-id]', onFolderDbClick);
+  .on('click', '.image-holder.file', onFileClick)
+  .on('click', '.image-holder.folder', onFolderClick)
+  .on('dblclick', '.image-holder.folder', onFolderDbClick)
+  .on('click', '.organization-media', onOrganizationCheck);
 
 $('#actionNewFolder')
   .on('click', createFolder);
@@ -358,7 +413,7 @@ function selectFile(id) {
   if (!data.selectMultiple) unselectAll();
   file.selected = isSelected;
 
-  var $el = $('.file[data-file-id=' + id + ']');
+  var $el = $('.item-holder[data-file-id=' + id + ']');
   $el[!!file.selected ? 'addClass' : 'removeClass']('selected');
   emitSelected();
 }
@@ -375,7 +430,7 @@ function selectFolder(id) {
   if (!data.selectMultiple) unselectAll();
   folder.selected = isSelected;
 
-  var $el = $('.folder[data-folder-id=' + id + ']');
+  var $el = $('.item-holder[data-folder-id=' + id + ']');
   $el[!!folder.selected ? 'addClass' : 'removeClass']('selected');
 
   emitSelected();
@@ -488,14 +543,16 @@ function emitSelected() {
 function onFolderClick(e) {
   e.preventDefault();
   var $el = $(this);
-  selectFolder($el.data('folder-id'));
+  var $parent = $el.parents('.item-holder');
+  selectFolder($parent.data('folder-id'));
 }
 
 function onFolderDbClick(e) {
   e.preventDefault();
   var $el = $(this);
+  var $parent = $el.parents('.item-holder');
 
-  var id = $el.data('folder-id');
+  var id = $parent.data('folder-id');
   var backItem;
 
   // Store to nav stack
@@ -513,7 +570,23 @@ function onFolderDbClick(e) {
 function onFileClick(e) {
   e.preventDefault();
   var $el = $(this);
-  selectFile($el.data('file-id'));
+  var $parent = $el.parents('.item-holder');
+  selectFile($parent.data('file-id'));
+}
+
+function onOrganizationCheck(e) {
+  var $el = $(this);
+  var fileId = $el.parents('.item-holder').data('file-id');
+  $el.toggleClass('active');
+  
+  var value = $el.hasClass('active');
+  Fliplet.API.request({
+    method: 'PUT',
+    url: 'v1/media/files/' + fileId,
+    data: {
+      isOrganizationMedia: value
+    }
+  });
 }
 
 function extensionClickFilter(file) {
@@ -742,7 +815,7 @@ function attachFolder(folder) {
 }
 
 function showDropZone() {
-  $dropZone.show();
+  $dropZone.addClass('active');
 }
 
 $fileInput.on('click', function(e) {
@@ -762,7 +835,7 @@ function clearFileInput() {
 }
 
 function hideDropZone() {
-  $dropZone.hide();
+  $dropZone.removeClass('active');
 }
 
 
@@ -772,10 +845,35 @@ function handleCancel(obj) {
 }
 
 function uploadFiles(files) {
-
+  var confirmedType;
+  var confirmedExt;
   var formData = new FormData();
   for (var i = 0; i < files.length; i++) {
+    var fileName = files[i].name;
+    var fileType = files[i].type;
+    var dotIndex = fileName.lastIndexOf('.');
+    var extension = fileName.substring(dotIndex);
+
+    confirmedType = _.find(validType[data.type].mimetype, function(type) {
+      return type === files[i].type;
+    });
+
+    if (!confirmedType) {
+      confirmedExt = _.find(extensionDictionary[data.type], function(ext) {
+        return '.' + ext === extension;
+      });
+
+      if (!confirmedExt) {
+        handleUploadingWrongFile();
+        break;
+      }
+    }
+
     formData.append('' + i, files[i]);
+  }
+
+  if (!confirmedType && !confirmedExt) {
+    return;
   }
 
   var config = {
@@ -827,6 +925,19 @@ function showError() {
   }, 3000);
 }
 
+function handleUploadingWrongFile() {
+  hideProgressBar();
+  if (isCancelClicked) return;
+  showWrongFileError();
+}
+
+function showWrongFileError() {
+  $wrongFileWrapper.show();
+  setTimeout(function() {
+    $wrongFileWrapper.hide()
+  }, 5000);
+}
+
 function addFilesToCurrentFiles(newFiles) {
   files = files.concat(newFiles);
   drawContentItems();
@@ -856,6 +967,7 @@ function drawContentItems() {
 
 $dropZone.on('drop', function(e) {
   e.preventDefault();
+  hideDropZone();
   var dataTransfer = e.originalEvent.dataTransfer;
   var files = dataTransfer.files;
   if (!files.length) return hideDropZone();
