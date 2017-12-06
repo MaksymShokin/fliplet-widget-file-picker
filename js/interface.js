@@ -233,7 +233,7 @@ $('.image-library')
   .on('click', '.image-holder.file', onFileClick)
   .on('click', '.image-holder.folder', onFolderClick)
   .on('dblclick', '.image-holder.folder', onFolderDbClick)
-  .on('change', '.isOrganizationCheck', onOrganizationCheck);
+  .on('click', '.organization-media', onOrganizationCheck);
 
 $('#actionNewFolder')
   .on('click', createFolder);
@@ -242,6 +242,12 @@ $('#actionUploadFile')
   .on('click', uploadFile);
 
 $(document)
+  .on('click', '.more-options', function() {
+    $('.more-options').not(this).removeClass('active');
+    $('.more-options').not(this).parents('.item-holder').find('.contextual-menu').removeClass('active');
+    $(this).toggleClass('active');
+    $(this).parents('.item-holder').find('.contextual-menu').toggleClass('active');
+  })
   .on('click', '.delete-file', function() {
     var fileID = $(this).parents('.item-holder').data('file-id');
     var $elementToDelete = $(this).parents('.item-holder');
@@ -572,9 +578,11 @@ function onFileClick(e) {
 }
 
 function onOrganizationCheck(e) {
-  var fileId = $(this).parents('.item-holder').data('file-id');
-  var value = $(this).is(":checked");
-
+  var $el = $(this);
+  var fileId = $el.parents('.item-holder').data('file-id');
+  $el.toggleClass('active');
+  
+  var value = $el.hasClass('active');
   Fliplet.API.request({
     method: 'PUT',
     url: 'v1/media/files/' + fileId,

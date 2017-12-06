@@ -185,24 +185,35 @@ header a {
   background-color: #FFFFFF;
 }
 
-.image-holder .delete-file,
-.image-holder .delete-folder {
+.thumb-wrapper .more-options {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   text-align: center;
-  line-height: 20px;
-  top: 0;
-  right: 0;
+  line-height: 25px;
+  font-size: 16px;
+  top: 1px;
+  right: 1px;
   z-index: 2;
-  background-color: #a94442;
-  color: #ffffff;
+  background-color: #fff;
+  color: #333;
+  border-bottom: 1px solid #f1f1f1;
+  border-left: 1px solid #f1f1f1;
+  cursor: pointer;
   display: none;
 }
 
-.image-holder:hover .delete-file,
-.image-holder:hover .delete-folder {
+.thumb-wrapper:hover .more-options,
+.thumb-wrapper .more-options.active {
   display: block;
+}
+
+.thumb-wrapper .more-options:hover {
+  background-color: #f7f7f7;
+}
+
+.thumb-wrapper .more-options:active {
+  background-color: #ccc;
 }
 
 .image-overlay {
@@ -298,19 +309,83 @@ header a {
   opacity: 1;
 }
 
-.image-library .checkbox.checkbox-icon input[type="checkbox"] + label {
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 20px;
+.image-library .thumb-wrapper {
+  position: relative;
 }
 
-.image-library .checkbox.checkbox-icon input[type="checkbox"] + label > span.check {
-  width: 16px;
-  height: 16px;
+.item-holder .contextual-menu {
+  position: absolute;
+  top: 28px;
+  right: 6px;
+  width: 90%;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 5px 0;
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  z-index: 5;
+  display: none;
 }
 
-.image-library .checkbox.checkbox-icon label > span.check > i.fa {
-  top: 1px;
+.item-holder .contextual-menu.active {
+  display: block;
+}
+
+.item-holder .contextual-menu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item-holder .contextual-menu ul li {
+  display: block;
+  padding: 3px 35px 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857;
+  color: #333333;
+  cursor: default;
+}
+
+.item-holder .contextual-menu ul li:hover,
+.item-holder .contextual-menu ul li:focus {
+    background-color: #f5f5f5;
+}
+
+.item-holder .contextual-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.item-holder .contextual-menu .text-danger {
+  color: #E03629;
+}
+
+.organization-media {
+  position: relative;
+}
+
+.organization-media .fa {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 35px;
+  height: 25px;
+  line-height: 25px;
+  margin-top: -12px;
+  font-size: 20px;
+  text-align: center;
+  color: rgba(0,0,0,0.1);
+}
+
+.organization-media.active .fa {
+  color: #00abd1;
 }
 
 @media only screen and (min-width: 488px) {

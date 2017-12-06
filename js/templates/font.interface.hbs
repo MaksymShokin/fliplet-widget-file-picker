@@ -1,17 +1,18 @@
 <div class="col-xs-4 col-sm-3 col-md-2 item-holder image font {{#if selected}} selected {{/if}}" data-file-id="{{id}}" data-file-ext="{{ext}}">
-    <div class="image-holder file">
-      <div class="delete-file"><i class="fa fa-trash"></i></div>
+    <div class="thumb-wrapper">
+      <div class="more-options"><i class="fa fa-ellipsis-v"></i></div>
+      <div class="image-holder file">
         <div class="image-overlay" style="opacity: 1">
           <i class="fa fa-font" aria-hidden="true"></i>
         </div>
+      </div>
     </div>
     <div class="image-title">{{name}}</div>
-    <div class="form-group clearfix">
-      <div class="checkbox checkbox-icon">
-        <input type="checkbox" class="isOrganizationCheck" id="isOrganizationFont-{{id}}" name="isOrganizationFont-{{id}}" value="true" {{#if isOrganizationMedia}}checked="true"{{/if}}>
-        <label for="isOrganizationFont-{{id}}">
-          <span class="check"><i class="fa fa-check"></i></span> Organization font
-        </label>
-      </div>
+    <div class="contextual-menu">
+      <ul>
+        <li class="organization-media {{#if isOrganizationMedia}}active{{/if}}">Make it available to the organization <i class="fa fa-check"></i></li>
+        <li role="separator" class="divider"></li>
+        <li class="text-danger delete-file">Delete</li>
+      </ul>
     </div>
 </div>
