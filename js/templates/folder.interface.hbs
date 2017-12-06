@@ -1,6 +1,13 @@
 <div class="col-xs-4 col-sm-3 col-md-2 item-holder folder {{#if selected}} selected {{/if}}" data-folder-id="{{id}}" data-parent-id="{{parentId}}">
   <div class="thumb-wrapper">
-    <div class="more-options"><i class="fa fa-ellipsis-v"></i></div>
+    <div class="btn-group more-options">
+      <button class="btn btn-link" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-ellipsis-v"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li class="text-danger delete-folder">Delete</li>
+      </ul>
+    </div>
     <div class="image-holder folder">
       <div class="image-overlay">
         <i class="fa fa-folder" aria-hidden="true"></i>
@@ -8,9 +15,4 @@
     </div>
   </div>
   <div class="image-title">{{name}}</div>
-  <div class="contextual-menu">
-    <ul>
-      <li class="text-danger delete-folder">Delete</li>
-    </ul>
-  </div>
 </div>

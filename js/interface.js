@@ -245,12 +245,6 @@ $('#actionUploadFile')
   .on('click', uploadFile);
 
 $(document)
-  .on('click', '.more-options', function() {
-    $('.more-options').not(this).removeClass('active');
-    $('.more-options').not(this).parents('.item-holder').find('.contextual-menu').removeClass('active');
-    $(this).toggleClass('active');
-    $(this).parents('.item-holder').find('.contextual-menu').toggleClass('active');
-  })
   .on('click', '.delete-file', function() {
     var fileID = $(this).parents('.item-holder').data('file-id');
     var $elementToDelete = $(this).parents('.item-holder');

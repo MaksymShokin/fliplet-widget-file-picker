@@ -183,8 +183,7 @@ html.provider-inline header {
   display: none;
 }
 
-.thumb-wrapper:hover .more-options,
-.thumb-wrapper .more-options.active {
+.thumb-wrapper:hover .more-options {
   display: block;
 }
 
@@ -192,10 +191,17 @@ html.provider-inline header {
   background-color: #f7f7f7;
 }
 
-.thumb-wrapper .more-options:active {
-  background-color: #ccc;
+.thumb-wrapper .more-options .btn-link {
+  padding: 0;
+  margin-top: -4px;
+  float: none;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  color: #333;
+  outline: none;
 }
-
+    
 .image-overlay {
   position: absolute;
   top: 0;
@@ -293,34 +299,7 @@ html.provider-inline header {
   position: relative;
 }
 
-.item-holder .contextual-menu {
-  position: absolute;
-  top: 28px;
-  right: 6px;
-  width: 90%;
-  height: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 5px 0;
-  border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
-  z-index: 5;
-  display: none;
-}
-
-.item-holder .contextual-menu.active {
-  display: block;
-}
-
-.item-holder .contextual-menu ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.item-holder .contextual-menu ul li {
+.more-options ul.dropdown-menu li {
   display: block;
   padding: 3px 35px 3px 20px;
   clear: both;
@@ -330,12 +309,12 @@ html.provider-inline header {
   cursor: default;
 }
 
-.item-holder .contextual-menu ul li:hover,
-.item-holder .contextual-menu ul li:focus {
+.more-options ul.dropdown-menu li:hover,
+.more-options ul.dropdown-menu li:focus {
     background-color: #f5f5f5;
 }
 
-.item-holder .contextual-menu .divider {
+.more-options ul.dropdown-menu .divider {
     height: 1px;
     margin: 9px 0;
     padding: 0;
@@ -343,7 +322,7 @@ html.provider-inline header {
     background-color: #e5e5e5;
 }
 
-.item-holder .contextual-menu .text-danger {
+.more-options ul.dropdown-menu .text-danger {
   color: #E03629;
 }
 
@@ -460,6 +439,10 @@ html.provider-inline header {
   position: absolute;
   top: 0;
   right: 15px;
+}
+
+.add-btn button {
+  outline: none;
 }
 
 .col-static {
