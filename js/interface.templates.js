@@ -83,7 +83,7 @@ this["Fliplet"]["Widget"]["Templates"]["templates.image"] = Handlebars.template(
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.nofiles"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"nofiles-msg\">\n  <div class=\"drop-zone-container\">\n    <div class=\"dropZ\">\n      <p>No content found.</p>\n      Drop files here or use the “Add” button.\n    </div>\n  </div>\n</div>\n";
+    return "<div class=\"nofiles-msg\">\n  <div class=\"drop-zone-container\">\n    <div class=\"dropZ\">\n      <p><strong>No content found</strong></p>\n      <span>Drop files here or use the <i>[Add <span class=\"caret\"></span>]</i> button</span>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.organization"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

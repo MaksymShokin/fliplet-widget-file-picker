@@ -213,14 +213,17 @@ function getFileTemplate(file) {
 function addFile(file) {
   file.fullname = file.url.substring(file.url.lastIndexOf('/') + 1);
   $imagesContainer.append(getFileTemplate(file));
+  Fliplet.Widget.autosize();
 }
 
 function addFolder(folder) {
   $imagesContainer.append(templates.folder(folder));
+  Fliplet.Widget.autosize();
 }
 
 function noFiles() {
   $imagesContainer.html(templates.nofiles());
+  Fliplet.Widget.autosize();
 }
 
 // events
@@ -818,7 +821,7 @@ function attachFolder(folder) {
 }
 
 function showDropZone() {
-  $dropZone.show();
+  $dropZone.addClass('active');
 }
 
 $fileInput.on('click', function(e) {
@@ -838,7 +841,7 @@ function clearFileInput() {
 }
 
 function hideDropZone() {
-  $dropZone.hide();
+  $dropZone.removeClass('active');
 }
 
 
@@ -970,6 +973,7 @@ function drawContentItems() {
 
 $dropZone.on('drop', function(e) {
   e.preventDefault();
+  hideDropZone();
   var dataTransfer = e.originalEvent.dataTransfer;
   var files = dataTransfer.files;
   if (!files.length) return hideDropZone();

@@ -8,24 +8,6 @@ html.provider-inline body {
   height: auto;
 }
 
-.spinner-holder {
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255,255,255,0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.hidden {
-  display: none;
-}
-
 .holder {
   position: relative;
   width: 100%;
@@ -41,25 +23,22 @@ html.provider-inline #app {
   max-height: none;
 }
 
-header {
-  display: flex;
-  font-size: 0.8em;
-  border-bottom: 1px solid #E3E9EB;
-  margin-bottom: 3rem;
-  padding-bottom: 1.5em;
-}
-
 html.provider-inline header {
   display: none;
 }
 
-header p {
-  flex: 1;
-  margin: 0 1.4rem 0 0;
-}
-
-header a {
-  text-decoration: none;
+.spinner-holder {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .uploaded-control p,
@@ -157,6 +136,7 @@ header a {
   justify-content: flex-start;
   flex-flow: wrap;
   padding-top: 15px;
+  margin-bottom: 5px;
 }
 
 .image-library .nofiles-msg {
@@ -388,6 +368,10 @@ header a {
   color: #00abd1;
 }
 
+.add-btn-fake {
+  color: #00abd1;
+}
+
 @media only screen and (min-width: 488px) {
   .titles,
   header {
@@ -410,7 +394,11 @@ header a {
   top: 0;
   display: none;
   z-index: 9999;
-  padding-top: 20%;
+  display: none;
+}
+
+.drop-zone.active {
+  display: flex;
 }
 
 .drop-zone-title {
@@ -437,7 +425,7 @@ header a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: lightblue;
+  border: 1px dashed #c1c1c1;
 }
 
 #app .form-group {
@@ -489,32 +477,31 @@ header a {
 
 #progress-bar-wrapper {
   display: none;
-  width: 100%;
   position: absolute;
-  top: 25%;
-  padding: 10px;
-}
-
-#progress-bar-wrapper {
-  display: none;
-  width: 98%;
-  position: fixed;
-  top: 25%;
-  background: rgba(251,224,149,0.8);
+  bottom: -55px;
+  left: 0;
+  right: 0;
   text-align: center;
-  margin-left: 1%;
+  z-index: 4;
 }
 
 #progress-bar {
   width: 100%;
-  background-color: white;
+  background-color: #f1f1f1;
 }
 
 #progress-line {
   width: 1%;
-  height: 30px;
-  background-color: rgb(34,156,183);
-  margin-bottom: 5px;
+  height: 25px;
+  background-color: #00abd1;
+}
+
+#uploading-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 25px;
+  line-height: 25px;
 }
 
 .cancel-btn-wrapper {
@@ -524,32 +511,39 @@ header a {
 }
 
 #cancel-upload {
-  margin-top: 5px;
   margin-bottom: 5px;
-  color: rgb(34,156,183);
+  color: #00abd1;
   cursor: pointer;
-  width: 50px;
+  width: 100px;
+  padding: 2px 4px;
+  background-color: rgba(241, 241, 241, 0.7);
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 #cancel-upload:hover {
-  color: white;
+  color: #fff;
+  background-color: #00abd1;
 }
 
 #alert-wrapper,
 #wrong-file-wrapper {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  bottom: -84px;
   left: 15px;
   right: 15px;
-  background: rgba(255, 44, 43, 0.6);
-  line-height: 30px;
+  background: #a94442;
+  padding: 12px 15px;
+  z-index: 5;
+}
+
+#alert-title {
+  font-weight: bold;
 }
 
 #alert-message,
 #alert-title {
-  color: white;
-  margin-left: 10%;
-  margin-right: 10%;
+  color: #fff;
 }
 
 #app header {
