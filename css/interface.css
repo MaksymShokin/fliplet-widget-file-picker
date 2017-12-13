@@ -180,11 +180,6 @@ html.provider-inline header {
   border-bottom: 1px solid #f1f1f1;
   border-left: 1px solid #f1f1f1;
   cursor: pointer;
-  display: none;
-}
-
-.thumb-wrapper:hover .more-options {
-  display: block;
 }
 
 .thumb-wrapper .more-options:hover {
