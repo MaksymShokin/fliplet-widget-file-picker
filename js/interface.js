@@ -29,6 +29,7 @@ if (data.type === 'folder') {
   $('#actionUploadFile').remove();
 }
 
+var selectAvailable = typeof data.selectAvailable !== 'undefined' ? data.selectAvailable : true; // Option to disable the selection of files and folders
 var templates = {};
 var upTo = [];
 var apps = [],
@@ -439,9 +440,13 @@ function selectFolder(id) {
 function selectItems(items) {
   items.forEach(function(item) {
     if (!item.contentType) {
-      selectFolder(item.id)
+      if (selectAvailable) {
+        selectFolder(item.id)
+      }
     } else if (item.contentType) {
-      selectFile(item.id)
+      if (selectAvailable) {
+        selectFile(item.id)
+      }
     }
   });
 }
@@ -544,7 +549,10 @@ function onFolderClick(e) {
   e.preventDefault();
   var $el = $(this);
   var $parent = $el.parents('.item-holder');
-  selectFolder($parent.data('folder-id'));
+
+  if (selectAvailable) {
+    selectFolder($parent.data('folder-id'));
+  }
 }
 
 function onFolderDbClick(e) {
@@ -571,7 +579,10 @@ function onFileClick(e) {
   e.preventDefault();
   var $el = $(this);
   var $parent = $el.parents('.item-holder');
-  selectFile($parent.data('file-id'));
+
+  if (selectAvailable) {
+    selectFile($parent.data('file-id'));
+  }
 }
 
 function onOrganizationCheck(e) {
@@ -903,7 +914,9 @@ function uploadFiles(files) {
       }
       if (data.autoSelectOnUpload) {
         files.forEach(function(file) {
-          selectFile(file.id);
+          if (selectAvailable) {
+            selectFile(file.id);
+          }
         })
       }
       hideProgressBar();
