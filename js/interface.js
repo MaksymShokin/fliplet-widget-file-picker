@@ -128,8 +128,7 @@ var extensionDictionary = {
     'webm'
   ],
   'font': [
-    'ttf',
-    'otf'
+    'ttf'
   ]
 };
 
@@ -945,6 +944,8 @@ function handleUploadingWrongFile() {
 }
 
 function showWrongFileError() {
+  var supportedExtensions = extensionDictionary[data.type].join(', ').toUpperCase();
+  $wrongFileWrapper.find('.supported-file-types').html(supportedExtensions);
   $wrongFileWrapper.show();
   setTimeout(function() {
     $wrongFileWrapper.hide()
