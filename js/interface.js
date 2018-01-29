@@ -945,7 +945,15 @@ function handleUploadingWrongFile() {
 
 function showWrongFileError() {
   var supportedExtensions = extensionDictionary[data.type].join(', ').toUpperCase();
-  $wrongFileWrapper.find('.supported-file-types').html(supportedExtensions);
+
+  if (extensionDictionary[data.type].length === 1) {
+    $wrongFileWrapper.find('.supported-file-types').html('Please upload a <strong>' + supportedExtensions + '</strong> file.');
+  } else if (extensionDictionary[data.type].length > 1) {
+    $wrongFileWrapper.find('.supported-file-types').html('Please upload one of the following files: <strong>' + supportedExtensions + '</strong>.');
+  } else {
+    $wrongFileWrapper.find('.supported-file-types').html('Please try again.');
+  }
+  
   $wrongFileWrapper.show();
   setTimeout(function() {
     $wrongFileWrapper.hide()
