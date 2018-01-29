@@ -1,6 +1,6 @@
 body,
 html {
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 html.provider-inline,
