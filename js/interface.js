@@ -790,7 +790,17 @@ function init() {
 
 
 Fliplet.Widget.onSaveRequest(function() {
-  Fliplet.Widget.save(getSelectedData()).then(function() {
+  var data = getSelectedData();
+  var navStack = {};
+
+  upTo.forEach(function(obj, idx) {
+    upTo[idx] = _.omit(obj, ['back']);
+  });
+  
+  navStack.upTo = upTo;
+  data.push(navStack);
+
+  Fliplet.Widget.save(data).then(function() {
     Fliplet.Widget.complete();
   });
 });
