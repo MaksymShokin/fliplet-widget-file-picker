@@ -26,7 +26,7 @@ data.selectMultiple = data.selectMultiple || false;
 if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) data.selectFiles = [data.selectFiles[0]];
 
 if (data.type === 'folder') {
-  $('#actionUploadFile').remove();
+  $('body').addClass('folderOnly');
 }
 
 var selectAvailable = typeof data.selectAvailable !== 'undefined' ? data.selectAvailable : true; // Option to disable the selection of files and folders
@@ -238,10 +238,10 @@ $('.image-library')
   .on('dblclick', '.image-holder.folder', onFolderDbClick)
   .on('click', '.organization-media', onOrganizationCheck);
 
-$('#actionNewFolder')
+$('.add-folder-btn')
   .on('click', createFolder);
 
-$('#actionUploadFile')
+$('.actionUploadFile')
   .on('click', uploadFile);
 
 $(document)
