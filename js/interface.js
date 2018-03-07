@@ -27,6 +27,7 @@ if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) 
 
 if (data.type === 'folder') {
   $('#actionUploadFile').remove();
+  $('body').addClass('folder-only');
 }
 
 var selectAvailable = typeof data.selectAvailable !== 'undefined' ? data.selectAvailable : true; // Option to disable the selection of files and folders

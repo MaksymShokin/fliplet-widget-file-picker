@@ -18,6 +18,10 @@ html.provider-inline body {
   overflow: auto;
 }
 
+body.folder-only #app {
+  padding-bottom: 46px;
+}
+
 html.provider-inline #app {
   height: auto;
   max-height: none;
@@ -25,6 +29,21 @@ html.provider-inline #app {
 
 html.provider-inline header {
   display: none;
+}
+
+.folder-only-info {
+  display: none;
+  height: 40px;
+  width: 100%;
+  line-height: 40px;
+  position: fixed;
+  bottom: 6px;
+  border-top: 1px solid #e3e9eb;
+  background-color: rgba(255,255,255,0.4);
+}
+
+body.folder-only .folder-only-info {
+  display: block;
 }
 
 .spinner-holder {
