@@ -272,7 +272,9 @@ $(document)
   .on('click', '.browse-files', function(e) {
     e.preventDefault();
     var navStack = {}
+    navStack.tempStack = cleanNavStack();
     navStack.upTo = cleanNavStack();
+    navStack.upTo.pop(); // Remove last one
     
     Fliplet.Studio.emit('overlay', {
       name: 'widget',
@@ -284,7 +286,7 @@ $(document)
         data: {
           context: 'overlay',
           appId: Fliplet.Env.get('appId'),
-          folder: navStack.upTo[navStack.upTo.length - 1],
+          folder: navStack.tempStack[navStack.tempStack.length - 1],
           navStack: navStack
         }
       }
