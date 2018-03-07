@@ -222,7 +222,7 @@ function addFolder(folder) {
 }
 
 function noFiles() {
-  $imagesContainer.html(templates.nofiles());
+  $imagesContainer.html(templates.nofiles(data));
   Fliplet.Widget.autosize();
 }
 
