@@ -214,16 +214,19 @@ function getFileTemplate(file) {
 function addFile(file) {
   file.fullname = file.url.substring(file.url.lastIndexOf('/') + 1);
   $imagesContainer.append(getFileTemplate(file));
+  $('.see-files-holder').removeClass('hidden');
   Fliplet.Widget.autosize();
 }
 
 function addFolder(folder) {
   $imagesContainer.append(templates.folder(folder));
+  $('.see-files-holder').removeClass('hidden');
   Fliplet.Widget.autosize();
 }
 
 function noFiles() {
   $imagesContainer.html(templates.nofiles());
+  $('.see-files-holder').addClass('hidden');
   Fliplet.Widget.autosize();
 }
 
@@ -270,6 +273,27 @@ $(document)
       });
     }
   })
+  .on('click', '.browse-files', function(e) {
+    e.preventDefault();
+    var navStack = {}
+    navStack.upTo = cleanNavStack();
+    
+    Fliplet.Studio.emit('overlay', {
+      name: 'widget',
+      options: {
+        size: 'large',
+        package: 'com.fliplet.file-manager',
+        title: 'File Manager',
+        classes: 'data-source-overlay',
+        data: {
+          context: 'overlay',
+          appId: Fliplet.Env.get('appId'),
+          folder: navStack.upTo[navStack.upTo.length - 1],
+          navStack: navStack
+        }
+      }
+    });
+  });
 
 function sortByName(item1, item2) {
   return byLowerCaseName(item1) > byLowerCaseName(item2);
@@ -789,16 +813,21 @@ function init() {
   Fliplet.Widget.autosize();
 }
 
+function cleanNavStack() {
+  var newUpTo = upTo.slice();
+  newUpTo.forEach(function(obj, idx) {
+    newUpTo[idx] = _.omit(obj, ['back']);
+  });
+
+  return newUpTo;
+}
+
 
 Fliplet.Widget.onSaveRequest(function() {
   var data = getSelectedData();
   var navStack = {};
 
-  upTo.forEach(function(obj, idx) {
-    upTo[idx] = _.omit(obj, ['back']);
-  });
-  
-  navStack.upTo = upTo;
+  navStack.upTo = cleanNavStack();
   data.push(navStack);
 
   Fliplet.Widget.save(data).then(function() {
