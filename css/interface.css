@@ -19,7 +19,7 @@ html.provider-inline body {
 }
 
 body.folder-only #app {
-  padding-bottom: 46px;
+  padding-bottom: 66px;
 }
 
 html.provider-inline #app {
@@ -33,17 +33,17 @@ html.provider-inline header {
 
 .folder-only-info {
   display: none;
-  height: 40px;
+  height: 60px;
   width: 100%;
-  line-height: 40px;
   position: fixed;
   bottom: 6px;
   border-top: 1px solid #e3e9eb;
   background-color: rgba(255,255,255,0.4);
+  align-items: center;
 }
 
 body.folder-only .folder-only-info {
-  display: block;
+  display: flex;
 }
 
 .spinner-holder {
