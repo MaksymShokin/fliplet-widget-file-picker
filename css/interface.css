@@ -18,10 +18,6 @@ html.provider-inline body {
   overflow: auto;
 }
 
-body.folder-only #app {
-  padding-bottom: 66px;
-}
-
 html.provider-inline #app {
   height: auto;
   max-height: none;
@@ -29,21 +25,6 @@ html.provider-inline #app {
 
 html.provider-inline header {
   display: none;
-}
-
-.see-files-holder {
-  border-top: 1px solid #e3e9eb;
-  padding-top: 10px;
-}
-
-.see-files-nofiles-holder,
-body.folder-only .nofiles-holder {
-  display: none;
-}
-
-body.folder-only .see-files-nofiles-holder,
-.nofiles-holder {
-  display: block;
 }
 
 .spinner-holder {

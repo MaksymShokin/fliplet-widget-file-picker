@@ -27,7 +27,6 @@ if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) 
 
 if (data.type === 'folder') {
   $('#actionUploadFile').remove();
-  $('body').addClass('folder-only');
 }
 
 var selectAvailable = typeof data.selectAvailable !== 'undefined' ? data.selectAvailable : true; // Option to disable the selection of files and folders
@@ -214,19 +213,16 @@ function getFileTemplate(file) {
 function addFile(file) {
   file.fullname = file.url.substring(file.url.lastIndexOf('/') + 1);
   $imagesContainer.append(getFileTemplate(file));
-  $('.see-files-holder').removeClass('hidden');
   Fliplet.Widget.autosize();
 }
 
 function addFolder(folder) {
   $imagesContainer.append(templates.folder(folder));
-  $('.see-files-holder').removeClass('hidden');
   Fliplet.Widget.autosize();
 }
 
 function noFiles() {
   $imagesContainer.html(templates.nofiles());
-  $('.see-files-holder').addClass('hidden');
   Fliplet.Widget.autosize();
 }
 
