@@ -785,18 +785,21 @@ function init() {
           return;
         }
         //drop down change handler
-        var data = $fileDropDown.val().split('_');
-        var type = data[0];
-        var id = parseInt(data[1]);
-        switch (type) {
-          case 'app':
-            renderApp(id);
-            break;
-          case 'org':
-            renderOrganization(id);
-            break;
-          default:
-            alert('Wrong select type: ' + type);
+        var dataAttr = $fileDropDown.val().split('_');
+        var type = dataAttr[0];
+        var id = parseInt(dataAttr[1]);
+
+        if (!data.selectFiles.length) {
+          switch (type) {
+            case 'app':
+              renderApp(id);
+              break;
+            case 'org':
+              renderOrganization(id);
+              break;
+            default:
+              alert('Wrong selected type: ' + type);
+          }
         }
       });
 
