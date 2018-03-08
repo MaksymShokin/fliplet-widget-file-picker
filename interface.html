@@ -28,15 +28,7 @@
             </div>
           </div>
           <div class="col-sm-2 col-sm-offset-7 col-static">
-            <div class="dropdown add-btn">
-              <button class="btn btn-link dropdown-toggle" type="button" id="add-drop-down-menu">
-                Add <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right" id="add-menu">
-                <li class="add-option" id="actionNewFolder"><a href="#">New folder</a></li>
-                <li class="add-option" id="actionUploadFile"><a href="#">Upload file</a></li>
-              </ul>
-            </div>
+            <div class="btn btn-link add-folder-btn"><i class="fa fa-plus-circle fa-fw"></i> Folder</div>
           </div>
           <div id="progress-bar-wrapper">
             <div id="uploading-wrapper">
@@ -61,7 +53,10 @@
         </div>
       </div>
       <div class="drop-note">
-        <span>Drop files here to upload</span>
+        <span>Drop files here to upload or <a href="#" class="actionUploadFile">select files</a></span>
+      </div>
+      <div class="see-files-holder">
+        <a href="#" class="browse-files">See all files</a>
       </div>
     </div>
   </div>

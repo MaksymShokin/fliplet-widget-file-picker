@@ -83,7 +83,11 @@ this["Fliplet"]["Widget"]["Templates"]["templates.image"] = Handlebars.template(
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.nofiles"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"nofiles-msg\">\n  <div class=\"drop-zone-container\">\n    <div class=\"dropZ\">\n      <p><strong>No content found</strong></p>\n      <span>Drop files here or use the <i>[Add <span class=\"caret\"></span>]</i> button</span>\n    </div>\n  </div>\n</div>\n";
+    var helper;
+
+  return "<div class=\"nofiles-msg\">\n  <div class=\"drop-zone-container\">\n    <div class=\"dropZ\">\n      <p>\n        <span>&#x1F633</span>\n        <br>\n        <strong>This folder seems to be empty</strong>\n      </p>\n      <small>No "
+    + container.escapeExpression(((helper = (helper = helpers.type || (depth0 != null ? depth0.type : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"type","hash":{},"data":data}) : helper)))
+    + " is found</small>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["Fliplet"]["Widget"]["Templates"]["templates.organization"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
