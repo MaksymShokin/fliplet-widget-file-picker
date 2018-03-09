@@ -906,7 +906,7 @@ function uploadFiles(files) {
     var fileName = files[i].name;
     var fileType = files[i].type;
     var dotIndex = fileName.lastIndexOf('.');
-    var extension = fileName.substring(dotIndex);
+    var extension = fileName.substring(dotIndex).toLowerCase();
 
     confirmedType = _.find(validType[data.type].mimetype, function(type) {
       return type === files[i].type;
