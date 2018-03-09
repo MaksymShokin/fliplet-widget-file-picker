@@ -831,7 +831,7 @@ Fliplet.Widget.onSaveRequest(function() {
 
   // Saves reference of navstack for use in File Manager
   data.forEach(function(obj, idx) {
-    obj.upTo = navStack
+    obj.navStackRef = navStack
   });
 
   Fliplet.Widget.save(data).then(function() {
