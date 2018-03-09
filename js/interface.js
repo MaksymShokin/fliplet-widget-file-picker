@@ -827,9 +827,12 @@ function cleanNavStack() {
 Fliplet.Widget.onSaveRequest(function() {
   var data = getSelectedData();
   var navStack = {};
-  
   navStack.upTo = cleanNavStack();
-  data.push(navStack);
+
+  // Saves reference of navstack for use in File Manager
+  data.forEach(function(obj, idx) {
+    obj.navStackRef = navStack
+  });
 
   Fliplet.Widget.save(data).then(function() {
     Fliplet.Widget.complete();
