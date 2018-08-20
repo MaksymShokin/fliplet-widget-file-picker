@@ -673,7 +673,7 @@ function updatePaths() {
 }
 
 function initDropDownState(id) {
-  $fileDropDown.prop('disabled', '');
+  $fileDropDown.prop('disabled', false);
   if (id) {
     $fileDropDown.val(id);
     $fileDropDown.trigger('change');
