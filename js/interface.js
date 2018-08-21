@@ -147,7 +147,7 @@ Object.keys(extensionDictionary).forEach(function(key) {
 });
 
 function getFilteredType(extension) {
-  var fileExtension = validExtensions.find(function(valid) {
+  var fileExtension = _.find(validExtensions, function(valid) {
     return valid.ext === extension
   });
   extension = extension.toLowerCase();
@@ -426,7 +426,7 @@ function unselectAll() {
 
 function selectFile(id) {
   if (data.type === 'folder') return;
-  var file = files.find(function(file) {
+  var file = _.find(files, function(file) {
     return file.id === id;
   });
   if (!file) return;
@@ -444,7 +444,7 @@ function selectFile(id) {
 function selectFolder(id) {
   if (!(data.type === 'folder' || data.type === '')) return;
 
-  var folder = folders.find(function(folder) {
+  var folder = _.find(folders, function(folder) {
     return folder.id === id;
   });
   if (!folder) return;
@@ -683,7 +683,7 @@ function initDropDownState(id) {
 function defaultInitWidgetState() {
   forceDropDownInit = false;
 
-  if (apps.find(function(app) {
+  if (_.find(apps, function(app) {
       return app.id === Fliplet.Env.get('appId');
     })) {
     initDropDownState('app_' + Fliplet.Env.get('appId'));
