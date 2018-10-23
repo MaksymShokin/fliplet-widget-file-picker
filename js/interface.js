@@ -132,6 +132,7 @@ var extensionDictionary = {
   ]
 };
 
+var opening = {};
 
 $('[data-toggle="tooltip"]').tooltip();
 $('#browser-label').text('Browse ' + (data.type === 'folder' ? 'folders' : 'files') + ' in');
@@ -318,10 +319,19 @@ function getOrganizations() {
 
 function openFolder(folderId) {
   $spinnerHolder.removeClass('hidden');
+  opening = {
+    type: 'folder',
+    id: folderId
+  };
   return getFolderAndFiles({
       folderId: folderId
     })
-    .then(renderFolderContent)
+    .then(function (response) {
+      if (opening.type !== 'folder' || opening.id !== folderId) {
+        return;
+      }
+      renderFolderContent(response);
+    })
     .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
@@ -330,10 +340,19 @@ function openFolder(folderId) {
 
 function openApp(appId) {
   $spinnerHolder.removeClass('hidden');
+  opening = {
+    type: 'app',
+    id: appId
+  };
   return getFolderAndFiles({
       appId: appId
     })
-    .then(renderFolderContent)
+    .then(function (response) {
+      if (opening.type !== 'app' || opening.id !== appId) {
+        return;
+      }
+      renderFolderContent(response);
+    })
     .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
@@ -342,10 +361,19 @@ function openApp(appId) {
 
 function openOrganization(organizationId) {
   $spinnerHolder.removeClass('hidden');
+  opening = {
+    type: 'organization',
+    id: organizationId
+  };
   return getFolderAndFiles({
       organizationId: organizationId
     })
-    .then(renderFolderContent)
+    .then(function (response) {
+      if (opening.type !== 'organization' || opening.id !== organizationId) {
+        return;
+      }
+      renderFolderContent(response);
+    })
     .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
