@@ -330,12 +330,11 @@ function openFolder(folderId) {
       if (opening.type !== 'folder' || opening.id !== folderId) {
         return;
       }
+
       renderFolderContent(response);
-    })
-    .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
-    })
+    });
 }
 
 function openApp(appId) {
@@ -351,12 +350,11 @@ function openApp(appId) {
       if (opening.type !== 'app' || opening.id !== appId) {
         return;
       }
+
       renderFolderContent(response);
-    })
-    .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
-    })
+    });
 }
 
 function openOrganization(organizationId) {
@@ -372,12 +370,11 @@ function openOrganization(organizationId) {
       if (opening.type !== 'organization' || opening.id !== organizationId) {
         return;
       }
+
       renderFolderContent(response);
-    })
-    .then(function() {
       updatePaths();
       $spinnerHolder.addClass('hidden');
-    })
+    });
 }
 
 function getFolderAndFiles(filter) {
