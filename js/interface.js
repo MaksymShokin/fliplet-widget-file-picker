@@ -76,6 +76,23 @@ var validType = {
       'video/webm'
     ]
   },
+  audio: {
+    mimetype: [
+      'audio/mp3',
+      'audio/wav',
+      'audio/x-wav',
+      'audio/flac',
+      'audio/mpegurl',
+      'audio/mp4',
+      'audio/mpeg',
+      'audio/ogg',
+      'audio/x-scpls',
+      'audio/webm',
+      'video/webm',
+      'audio/x-m4a',
+      'audio/x-m4b'
+    ]
+  },
   font: {
     mimetype: [
       'font/ttf',
@@ -90,7 +107,7 @@ var validType = {
 var isCancelClicked;
 var forceDropDownInit;
 
-['app', 'image', 'document', 'other', 'video', 'font', 'folder', 'organization', 'nofiles']
+['app', 'image', 'document', 'other', 'video', 'audio', 'font', 'folder', 'organization', 'nofiles']
 .forEach(function(tpl) {
   templates[tpl] = Fliplet.Widget.Templates['templates.' + tpl];
 });
@@ -115,6 +132,19 @@ var extensionDictionary = {
     'xls',
     'xlsx'
 
+  ],
+  'audio': [
+    "flac",
+    "m3u",
+    "m3u8",
+    "m4a",
+    "m4b",
+    "mp3",
+    "ogg",
+    "opus",
+    "pls",
+    "wav",
+    "webm"
   ],
   'video': [
     'mov',
@@ -196,6 +226,9 @@ function getFileTemplate(file) {
       break;
     case 'video':
       template = templates.video(file);
+      break;
+    case 'audio':
+      template = templates.audio(file);
       break;
     case 'others':
       template = templates.other(file);
