@@ -79,12 +79,13 @@ var validType = {
   audio: {
     mimetype: [
       'audio/mp3',
+      'audio/mpeg',
+      'audio/x-mpeg',
       'audio/wav',
       'audio/x-wav',
       'audio/flac',
       'audio/mpegurl',
       'audio/mp4',
-      'audio/mpeg',
       'audio/ogg',
       'audio/x-scpls',
       'audio/webm',
@@ -979,6 +980,18 @@ function uploadFiles(files) {
         handleUploadingWrongFile();
         break;
       }
+    } else{
+      var isFileExtensionApproved = data.fileExtension.some(function(ext) {
+        return extension === '.' + ext.toLowerCase();
+      });
+      /**
+       * if type was found in our valid types and fileExtension configuration was passed
+       * check if the file is from the correct fileExtension
+       */
+      if(!isFileExtensionApproved){
+        handleUploadingWrongFile();
+        break;
+      }
     }
 
     formData.append('' + i, files[i]);
@@ -1046,7 +1059,9 @@ function handleUploadingWrongFile() {
 }
 
 function showWrongFileError() {
-  var supportedExtensions = extensionDictionary[data.type].join(', ').toUpperCase();
+  var supportedExtensions = data.fileExtension && data.fileExtension.length
+    ? data.fileExtension.join(', ').toUpperCase()
+    : extensionDictionary[data.type].join(', ').toUpperCase();
 
   if (extensionDictionary[data.type].length === 1) {
     $wrongFileWrapper.find('.supported-file-types').html('Please upload a <strong>' + supportedExtensions + '</strong> file.');
