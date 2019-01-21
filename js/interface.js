@@ -980,7 +980,7 @@ function uploadFiles(files) {
         handleUploadingWrongFile();
         break;
       }
-    } else{
+    } else if(data.fileExtension.length) {
       var isFileExtensionApproved = data.fileExtension.some(function(ext) {
         return extension === '.' + ext.toLowerCase();
       });
@@ -1059,7 +1059,7 @@ function handleUploadingWrongFile() {
 }
 
 function showWrongFileError() {
-  var supportedExtensions = data.fileExtension && data.fileExtension.length
+  var supportedExtensions = data.fileExtension.length
     ? data.fileExtension.join(', ').toUpperCase()
     : extensionDictionary[data.type].join(', ').toUpperCase();
 
