@@ -45,7 +45,8 @@ var validType = {
       'image/png',
       'image/gif',
       'image/x-tiff',
-      'image/tiff'
+      'image/tiff',
+      'image/svg+xml'
     ]
   },
   document: {
@@ -119,7 +120,8 @@ var extensionDictionary = {
     'png',
     'jpeg',
     'gif',
-    'tiff'
+    'tiff',
+    'svg'
   ],
   'document': [
     'pdf',
