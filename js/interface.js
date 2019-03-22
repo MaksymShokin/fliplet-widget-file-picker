@@ -441,13 +441,10 @@ function getFolderAndFiles(filter) {
     };
   }
 
-  if (typeof data.cdn !== 'undefined') {
-    filter.cdn = data.cdn
-  }
-
   return Promise.all([
     Fliplet.Media.Folders.get($.extend({}, {
-      type: 'folders'
+      type: 'folders',
+      cdn: data.cdn
     }, filter)).then(filterResponse),
     Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
