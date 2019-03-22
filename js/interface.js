@@ -441,28 +441,31 @@ function getFolderAndFiles(filter) {
     };
   }
 
+  function filterResponse(response) {
+    // Filter only the files from that request app/org/folder
+    var files = response.files.filter(filterFiles);
+    var folders = response.folders.filter(filterFolders);
+
+    return Promise.resolve({
+      files: files,
+      folders: folders
+    });
+  }
+
   return Promise.all([
     Fliplet.Media.Folders.get($.extend({}, {
       type: 'folders',
       cdn: data.cdn
-    }, filter)).then(filterResponse),
+    }, filter))
+      .then(filterResponse),
     Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
         return type.toLowerCase();
-      }).join(',') : data.type
-    }, filter)).then(filterResponse)
-  ])
-}
-
-function filterResponse(response) {
-  // Filter only the files from that request app/org/folder
-  var files = response.files.filter(filterFiles);
-  var folders = response.folders.filter(filterFolders);
-
-  return Promise.resolve({
-    files: files,
-    folders: folders
-  });
+      }).join(',') : data.type,
+      cdn: data.cdn
+    }, filter))
+      .then(filterResponse)
+  ]);
 }
 
 function renderFolderContent(values) {
