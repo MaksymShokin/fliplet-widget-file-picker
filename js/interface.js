@@ -442,22 +442,13 @@ function getFolderAndFiles(filter) {
     };
   }
 
-  function filterResponse(response) {
-    // Filter only the files from that request app/org/folder
-    var files = response.files.filter(filterFiles);
-    var folders = response.folders.filter(filterFolders);
-
-    return Promise.resolve({
-      files: files,
-      folders: folders
-    });
+  if (typeof data.cdn !== 'undefined') {
+    filter.cdn = data.cdn
   }
-
 
   return Promise.all([
     Fliplet.Media.Folders.get($.extend({}, {
-      type: 'folders',
-      cdn: data.cdnToggle
+      type: 'folders'
     }, filter)).then(filterResponse),
     Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
@@ -465,6 +456,17 @@ function getFolderAndFiles(filter) {
       }).join(',') : data.type
     }, filter)).then(filterResponse)
   ])
+}
+
+function filterResponse(response) {
+  // Filter only the files from that request app/org/folder
+  var files = response.files.filter(filterFiles);
+  var folders = response.folders.filter(filterFolders);
+
+  return Promise.resolve({
+    files: files,
+    folders: folders
+  });
 }
 
 function renderFolderContent(values) {
