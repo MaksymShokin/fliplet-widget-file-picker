@@ -19,7 +19,6 @@ var data = Fliplet.Widget.getData() || {};
 data.type = data.type || '';
 data.selectFiles = data.selectFiles || [];
 data.autoSelectOnUpload = data.autoSelectOnUpload || false;
-data.cdnToggle = data.cdn || true;
 
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
