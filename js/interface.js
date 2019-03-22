@@ -19,6 +19,7 @@ var data = Fliplet.Widget.getData() || {};
 data.type = data.type || '';
 data.selectFiles = data.selectFiles || [];
 data.autoSelectOnUpload = data.autoSelectOnUpload || false;
+data.cdnToggle = data.cdn || true;
 
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
@@ -455,7 +456,8 @@ function getFolderAndFiles(filter) {
 
   return Promise.all([
     Fliplet.Media.Folders.get($.extend({}, {
-      type: 'folders'
+      type: 'folders',
+      cdn: data.cdnToggle
     }, filter)).then(filterResponse),
     Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
