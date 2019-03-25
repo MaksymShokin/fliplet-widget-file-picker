@@ -452,17 +452,20 @@ function getFolderAndFiles(filter) {
     });
   }
 
-
   return Promise.all([
     Fliplet.Media.Folders.get($.extend({}, {
-      type: 'folders'
-    }, filter)).then(filterResponse),
+      type: 'folders',
+      cdn: data.cdn
+    }, filter))
+      .then(filterResponse),
     Fliplet.Media.Folders.get($.extend({}, {
       type: data.fileExtension.length > 0 ? data.fileExtension.map(function(type) {
         return type.toLowerCase();
-      }).join(',') : data.type
-    }, filter)).then(filterResponse)
-  ])
+      }).join(',') : data.type,
+      cdn: data.cdn
+    }, filter))
+      .then(filterResponse)
+  ]);
 }
 
 function renderFolderContent(values) {
