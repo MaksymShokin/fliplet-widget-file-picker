@@ -899,7 +899,7 @@ Fliplet.Widget.onSaveRequest(function() {
   var data = _.map(getSelectedData(), function (file) {
     // Remove irrelevant or volatile information before saving
     _.omit(file, [
-      'createdAt', 'updatedAt', 'deletedAt', 'appId', 'mediaFolderId',
+      'createdAt', 'updatedAt', 'deletedAt', 'appId',
       'masterMediaFolderId', 'parentId', 'organizationId'
     ]);
     return file;
