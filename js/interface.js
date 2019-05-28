@@ -297,7 +297,7 @@ $(document)
   .on('click', '.delete-folder', function() {
     var folderID = $(this).parents('.item-holder').data('folder-id');
     var $elementToDelete = $(this).parents('.item-holder');
-    
+
     var alertConfirmation = confirm("Are you sure you want to delete the folder?");
 
     if (alertConfirmation) {
@@ -312,7 +312,7 @@ $(document)
     navStack.tempStack = cleanNavStack();
     navStack.upTo = cleanNavStack();
     navStack.upTo.pop(); // Remove last one
-    
+
     Fliplet.Studio.emit('overlay', {
       name: 'widget',
       options: {
@@ -572,8 +572,8 @@ function restoreFolders(id, appId, organizationId) {
   }
 
   return Fliplet.API.request({
-      url: 'v1/media/folders/' + id
-    })
+    url: 'v1/media/folders/' + id
+  })
     .then(function(res) {
       var backItem = res;
       // Store to nav stack
@@ -588,8 +588,8 @@ function restoreFolders(id, appId, organizationId) {
     });
 }
 
-function restoreFoldersPath(lastFolderid, appId, organizationId) {
-  return restoreFolders(lastFolderid, appId, organizationId)
+function restoreFoldersPath(folderId, appId, organizationId) {
+  return restoreFolders(folderId, appId, organizationId)
     .then(function() {
       return upTo[upTo.length - 1].back();
     });
@@ -597,12 +597,19 @@ function restoreFoldersPath(lastFolderid, appId, organizationId) {
 
 function restoreWidgetState() {
   var file = data.selectFiles[0];
-  return restoreFoldersPath(file.mediaFolderId || file.parentId, file.appId, file.organizationId)
-    .then(function() {
-      return selectItems(data.selectFiles);
-    }, function() {
-      return defaultInitWidgetState();
-    })
+  var isFile = file.hasOwnProperty('mediaFolderId');
+
+  return Fliplet.API.request({
+    url: 'v1/media/' + (isFile ? 'files' : 'folders') + '/' + file.id
+  }).then(function (res) {
+    var parentFolderId = isFile ? res.mediaFolderId : res.parentId;
+    return restoreFoldersPath(parentFolderId, res.appId, res.organizationId);
+  }).then(function () {
+    return selectItems(data.selectFiles);
+  }).catch(function (error) {
+    console.warn(error);
+    return defaultInitWidgetState();
+  })
 }
 
 function getSelectedFilesData() {
@@ -675,7 +682,7 @@ function onOrganizationCheck(e) {
   var $el = $(this);
   var fileId = $el.parents('.item-holder').data('file-id');
   $el.toggleClass('active');
-  
+
   var value = $el.hasClass('active');
   Fliplet.API.request({
     method: 'PUT',
@@ -889,13 +896,13 @@ function cleanNavStack() {
 
 
 Fliplet.Widget.onSaveRequest(function() {
-  var data = getSelectedData();
-  var navStack = {};
-  navStack.upTo = cleanNavStack();
-
-  // Saves reference of navstack for use in File Manager
-  data.forEach(function(obj, idx) {
-    obj.navStackRef = navStack
+  var data = _.map(getSelectedData(), function (file) {
+    // Remove irrelevant or volatile information before saving
+    _.omit(file, [
+      'createdAt', 'updatedAt', 'deletedAt', 'appId',
+      'masterMediaFolderId', 'parentId', 'organizationId'
+    ]);
+    return file;
   });
 
   Fliplet.Widget.save(data).then(function() {
@@ -1075,7 +1082,7 @@ function showWrongFileError() {
   } else {
     $wrongFileWrapper.find('.supported-file-types').html('Please try again.');
   }
-  
+
   $wrongFileWrapper.show();
   setTimeout(function() {
     $wrongFileWrapper.hide()
