@@ -896,13 +896,13 @@ function cleanNavStack() {
 
 
 Fliplet.Widget.onSaveRequest(function() {
-  var data = getSelectedData();
-  var navStack = {};
-  navStack.upTo = cleanNavStack();
-
-  // Saves reference of navstack for use in File Manager
-  data.forEach(function(obj, idx) {
-    obj.navStackRef = navStack
+  var data = _.map(getSelectedData(), function (file) {
+    // Remove irrelevant or volatile information before saving
+    _.omit(file, [
+      'createdAt', 'updatedAt', 'deletedAt', 'appId', 'mediaFolderId',
+      'masterMediaFolderId', 'parentId', 'organizationId'
+    ]);
+    return file;
   });
 
   Fliplet.Widget.save(data).then(function() {
