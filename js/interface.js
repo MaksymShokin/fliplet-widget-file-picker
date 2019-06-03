@@ -597,7 +597,7 @@ function restoreFoldersPath(folderId, appId, organizationId) {
 
 function restoreWidgetState() {
   var file = data.selectFiles[0];
-  var isFile = file.hasOwnProperty('mediaFolderId');
+  var isFile = file.hasOwnProperty('contentType');
 
   return Fliplet.API.request({
     url: 'v1/media/' + (isFile ? 'files' : 'folders') + '/' + file.id
