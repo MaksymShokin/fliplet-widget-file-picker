@@ -603,7 +603,7 @@ function restoreWidgetState() {
     url: 'v1/media/' + (isFile ? 'files' : 'folders') + '/' + file.id
   }).then(function (res) {
     if (!res.deletedAt) {
-      return Promise.resolve(res);
+      return res;
     }
 
     return Fliplet.Modal.confirm({
@@ -621,7 +621,7 @@ function restoreWidgetState() {
       }
     }).then(function (restore) {
       if (!restore) {
-        return Promise.resolve(res);
+        return res;
       }
 
       return Fliplet.API.request({
@@ -630,7 +630,7 @@ function restoreWidgetState() {
       }).then(function () {
         // File/folder restored
         delete res.deletedAt;
-        return Promise.resolve(res);
+        return res;
       }).catch(function () {
         // Deletion failed, continue restoring widget state
         // This will restore the widget to its default state
