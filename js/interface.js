@@ -602,6 +602,42 @@ function restoreWidgetState() {
   return Fliplet.API.request({
     url: 'v1/media/' + (isFile ? 'files' : 'folders') + '/' + file.id
   }).then(function (res) {
+    if (!res.deletedAt) {
+      return Promise.resolve(res);
+    }
+
+    return Fliplet.Modal.confirm({
+      title: 'Unable to find ' + (isFile ? 'file' : 'folder'),
+      message: '<strong>' + res.name + '</strong> has been deleted',
+      buttons: {
+        confirm: {
+          label: 'Restore ' + (isFile ? 'file' : 'folder'),
+          className: 'btn-success'
+        },
+        cancel: {
+          label: 'Select another ' + (isFile ? 'file' : 'folder'),
+          className: 'btn-default'
+        }
+      }
+    }).then(function (restore) {
+      if (!restore) {
+        return Promise.resolve(res);
+      }
+
+      return Fliplet.API.request({
+        method: 'POST',
+        url: 'v1/media/' + (isFile ? 'files' : 'folders') + '/' + res.id + '/restore'
+      }).then(function () {
+        // File/folder restored
+        delete res.deletedAt;
+        return Promise.resolve(res);
+      }).catch(function () {
+        // Deletion failed, continue restoring widget state
+        // This will restore the widget to its default state
+        return Promise.resolve(res);
+      });
+    });
+  }).then(function (res) {
     var parentFolderId = isFile ? res.mediaFolderId : res.parentId;
     return restoreFoldersPath(parentFolderId, res.appId, res.organizationId);
   }).then(function () {
