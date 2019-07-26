@@ -538,8 +538,8 @@ function selectItems(items) {
 }
 
 function restoreRoot(appId, organizationId) {
-  forceDropDownInit = true;
   var backItem;
+
   if (appId && _.find(apps, ['id', appId])) {
     backItem = _.find(apps, ['id', appId]);
     backItem.back = function() {
@@ -559,6 +559,7 @@ function restoreRoot(appId, organizationId) {
   } else {
     initDropDownState();
   }
+
   if (backItem) {
     upTo.unshift(backItem);
   }
@@ -576,6 +577,7 @@ function restoreFolders(id, appId, organizationId) {
   })
     .then(function(res) {
       var backItem = res;
+
       // Store to nav stack
       backItem.back = function() {
         return openFolder(id);
@@ -641,10 +643,11 @@ function restoreWidgetState() {
     var parentFolderId = isFile ? res.mediaFolderId : res.parentId;
     return restoreFoldersPath(parentFolderId, res.appId, res.organizationId);
   }).then(function () {
-    return selectItems(data.selectFiles);
+    selectItems(data.selectFiles);
+    forceDropDownInit = false;
   }).catch(function (error) {
     console.warn(error);
-    return defaultInitWidgetState();
+    defaultInitWidgetState();
   })
 }
 
@@ -781,6 +784,7 @@ function updatePaths() {
 
 function initDropDownState(id) {
   $fileDropDown.prop('disabled', false);
+
   if (id) {
     $fileDropDown.val(id);
     $fileDropDown.trigger('change');
@@ -806,19 +810,19 @@ function defaultInitWidgetState() {
 }
 
 function initWidgetState() {
-  if (data.selectFiles.length) {
-    restoreWidgetState();
-  } else {
+  forceDropDownInit = true;
+
+  if (_.isEmpty(data.selectFiles)) {
     defaultInitWidgetState();
+    return;
   }
 
-  $fileDropDown.trigger('change');
-
-  return Promise.resolve();
+  restoreWidgetState();
 }
 
 function renderApp(id) {
   var backItem;
+
   backItem = _.find(apps, ['id', id]);
   backItem.name = 'Root';
   backItem.back = function() {
@@ -826,11 +830,13 @@ function renderApp(id) {
   };
   backItem.type = 'appId';
   upTo = [backItem];
+
   openApp(id);
 }
 
 function renderOrganization(id) {
   var backItem;
+
   backItem = _.find(organizations, ['id', id]);
   backItem.name = 'Root';
   backItem.back = function() {
@@ -838,8 +844,8 @@ function renderOrganization(id) {
   };
   backItem.type = 'organizationId';
   backItem.id = id;
-
   upTo = [backItem];
+
   openOrganization(id);
 }
 
@@ -853,11 +859,9 @@ function init() {
       var userOrganisations = values[0];
       var userApps = values[1];
       let dropDownHtml = [];
-
       var thisOrganisation = _.find(userOrganisations, function(org) {
         return org.id === Fliplet.Env.get('organizationId');
       });
-
       var thisApp = _.find(userApps, function(app) {
         return app.id === Fliplet.Env.get('appId');
       });
@@ -886,29 +890,25 @@ function init() {
 
       $fileDropDown.append(dropDownHtml.join(''));
 
-      // Removes disabled attribute to allow the user to use the drop-down
-
       $fileDropDown.change(function() {
         if (forceDropDownInit) {
-          forceDropDownInit = false;
           return;
         }
+
         //drop down change handler
         var dataAttr = $fileDropDown.val().split('_');
         var type = dataAttr[0];
         var id = parseInt(dataAttr[1]);
 
-        if (!data.selectFiles.length) {
-          switch (type) {
-            case 'app':
-              renderApp(id);
-              break;
-            case 'org':
-              renderOrganization(id);
-              break;
-            default:
-              alert('Wrong selected type: ' + type);
-          }
+        switch (type) {
+          case 'app':
+            renderApp(id);
+            break;
+          case 'org':
+            renderOrganization(id);
+            break;
+          default:
+            console.warn('Invalid selected type: ' + type);
         }
       });
 
