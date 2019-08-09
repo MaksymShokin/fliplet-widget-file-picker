@@ -1,6 +1,7 @@
 body,
 html {
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 html.provider-inline,
@@ -200,7 +201,7 @@ body.folderOnly .helper {
   color: #333;
   outline: none;
 }
-    
+
 .image-overlay {
   position: absolute;
   top: 0;
