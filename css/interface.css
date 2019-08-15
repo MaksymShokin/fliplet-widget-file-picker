@@ -585,8 +585,5 @@ body.folderOnly .drop-note {
 
 .dropdown-menu {
   min-width: 115px;
-}
-
-.delete-file {
   text-align: right;
 }
