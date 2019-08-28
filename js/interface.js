@@ -29,6 +29,11 @@ if (data.type === 'folder') {
   $('body').addClass('folderOnly');
 }
 
+// if file picker called from image component add overflow hidden to remove double scroll bar
+if (data.filePickerOpenFromImage) {
+  $('html').css('overflow-y', 'hidden');
+}
+
 var selectAvailable = typeof data.selectAvailable !== 'undefined' ? data.selectAvailable : true; // Option to disable the selection of files and folders
 var templates = {};
 var upTo = [];
