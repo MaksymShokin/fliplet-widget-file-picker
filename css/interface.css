@@ -256,6 +256,28 @@ body.folderOnly .helper {
   font-size: 11px;
   margin-top: 1px;
   word-break: break-word;
+  overflow: hidden;
+  position: relative;
+  line-height: 1.4em;
+  max-height: 4.2em;
+  padding-right: 8px;
+}
+
+.image-title:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.image-title:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: #f8f6f7;
 }
 
 .folder-selection {
