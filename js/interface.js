@@ -926,6 +926,15 @@ function init() {
   Fliplet.Widget.autosize();
 }
 
+// Reload content when closing overlay (file manager)
+Fliplet.Studio.onMessage(function (event) {
+  var data = event.data;
+
+  if (data.event === 'overlay-close' && data.title === 'File Manager') {
+    upTo[upTo.length - 1].back();
+  }
+});
+
 function cleanNavStack() {
   var newUpTo = upTo.slice();
   newUpTo.forEach(function(obj, idx) {
