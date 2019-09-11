@@ -269,11 +269,6 @@ function noFiles() {
 }
 
 // events
-$('#app')
-  .on('click', '#help_tip', function() {
-    alert("During beta, please use live chat and let us know what you need help with.");
-  });
-
 $('.image-library')
   .on('click', '.image-holder.file', onFileClick)
   .on('click', '.image-holder.folder', onFolderClick)
