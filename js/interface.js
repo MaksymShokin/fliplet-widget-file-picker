@@ -18,7 +18,6 @@ var data = Fliplet.Widget.getData() || {};
 
 data.type = data.type || '';
 data.selectFiles = data.selectFiles || [];
-data.autoSelectOnUpload = data.autoSelectOnUpload || false;
 
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
@@ -995,6 +994,9 @@ $fileInput.on('click', function(e) {
 $fileInput.on('change', function(e) {
   var files = e.target.files;
   if (!files.length) return;
+  
+  data.autoSelectOnUpload = files.length === 1;
+
   uploadFiles(files);
   clearFileInput();
 });
