@@ -22,6 +22,7 @@ data.selectFiles = data.selectFiles || [];
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
 data.selectMultiple = data.selectMultiple || false;
+data.allowOrganisationFolder = !(data.allowOrganisationFolder === false);
 if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) data.selectFiles = [data.selectFiles[0]];
 
 if (data.type === 'folder') {
@@ -867,9 +868,11 @@ function init() {
 
       // Organisations
       if (thisOrganisation) {
-        dropDownHtml.push('<optgroup label="--- Organisation ---">');
-        dropDownHtml.push('<option value="org_' + thisOrganisation.id + '">' + thisOrganisation.name + '</option>');
-        dropDownHtml.push('</optgroup>');
+        if (data.allowOrganisationFolder) {
+          dropDownHtml.push('<optgroup label="--- Organisation ---">');
+          dropDownHtml.push('<option value="org_' + thisOrganisation.id + '">' + thisOrganisation.name + '</option>');
+          dropDownHtml.push('</optgroup>');
+        }
         organizations.push({
           id: thisOrganisation.id,
           name: thisOrganisation.name
@@ -994,7 +997,7 @@ $fileInput.on('click', function(e) {
 $fileInput.on('change', function(e) {
   var files = e.target.files;
   if (!files.length) return;
-  
+
   data.autoSelectOnUpload = files.length === 1;
 
   uploadFiles(files);
