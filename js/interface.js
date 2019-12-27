@@ -292,7 +292,7 @@ $(document)
         $elementToDelete.remove();
       });
 
-      _.remove(files, {id: fileID});
+      _.remove(files, { id: fileID });
     }
   })
   .on('click', '.delete-folder', function() {
