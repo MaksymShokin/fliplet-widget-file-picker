@@ -873,6 +873,7 @@ function init() {
           dropDownHtml.push('<option value="org_' + thisOrganisation.id + '">' + thisOrganisation.name + '</option>');
           dropDownHtml.push('</optgroup>');
         }
+
         organizations.push({
           id: thisOrganisation.id,
           name: thisOrganisation.name
