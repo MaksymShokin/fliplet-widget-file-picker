@@ -306,7 +306,7 @@ $(document)
         $elementToDelete.remove();
       });
       
-      _.remove(folders, {id: folderID});
+      _.remove(folders, { id: folderID });
     }
   })
   .on('click', '.browse-files', function(e) {
