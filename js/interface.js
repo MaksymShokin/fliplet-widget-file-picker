@@ -22,7 +22,7 @@ data.selectFiles = data.selectFiles || [];
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
 data.selectMultiple = data.selectMultiple || false;
-data.allowOrganisationFolder = !(data.allowOrganisationFolder === false);
+data.allowOrganisationFolder = data.allowOrganisationFolder !== false;
 if (!(data.selectMultiple && data.selectFiles.length > 1) && !data.selectFiles) data.selectFiles = [data.selectFiles[0]];
 
 if (data.type === 'folder') {
