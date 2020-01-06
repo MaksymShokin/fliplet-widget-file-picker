@@ -291,6 +291,8 @@ $(document)
       Fliplet.Media.Files.delete(fileID).then(function() {
         $elementToDelete.remove();
       });
+
+      _.remove(files, { id: fileID });
     }
   })
   .on('click', '.delete-folder', function() {
@@ -303,6 +305,8 @@ $(document)
       Fliplet.Media.Folders.delete(folderID).then(function() {
         $elementToDelete.remove();
       });
+      
+      _.remove(folders, { id: folderID });
     }
   })
   .on('click', '.browse-files', function(e) {
@@ -994,7 +998,7 @@ $fileInput.on('click', function(e) {
 $fileInput.on('change', function(e) {
   var files = e.target.files;
   if (!files.length) return;
-  
+
   data.autoSelectOnUpload = files.length === 1;
 
   uploadFiles(files);
