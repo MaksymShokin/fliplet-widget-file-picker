@@ -286,29 +286,37 @@ $(document)
     var fileID = $(this).parents('.item-holder').data('file-id');
     var $elementToDelete = $(this).parents('.item-holder');
 
-    var alertConfirmation = confirm("Are you sure you want to delete the file?");
+    Fliplet.Modal.confirm({
+      message: 'Are you sure you want to delete the file?'
+    }).then(function(result) {
+      if (!result) {
+        return;
+      }
 
-    if (alertConfirmation) {
       Fliplet.Media.Files.delete(fileID).then(function() {
         $elementToDelete.remove();
       });
 
       _.remove(files, { id: fileID });
-    }
+    });
   })
   .on('click', '.delete-folder', function() {
     var folderID = $(this).parents('.item-holder').data('folder-id');
     var $elementToDelete = $(this).parents('.item-holder');
 
-    var alertConfirmation = confirm("Are you sure you want to delete the folder?");
+    Fliplet.Modal.confirm({
+      message: 'Are you sure you want to delete the folder?'
+    }).then(function(result) {
+      if (!result) {
+        return;
+      }
 
-    if (alertConfirmation) {
       Fliplet.Media.Folders.delete(folderID).then(function() {
         $elementToDelete.remove();
       });
-      
+
       _.remove(folders, { id: folderID });
-    }
+    });
   })
   .on('click', '.browse-files', function(e) {
     e.preventDefault();
