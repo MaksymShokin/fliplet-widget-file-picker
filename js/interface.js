@@ -306,7 +306,7 @@ $(document)
       Fliplet.Media.Folders.delete(folderID).then(function() {
         $elementToDelete.remove();
       });
-      
+
       _.remove(folders, { id: folderID });
     }
   })
@@ -967,24 +967,32 @@ function uploadFile() {
 }
 
 function createFolder() {
-  var folderName = prompt('Please enter the folder name');
-  if (folderName === null) return;
-  folderName = folderName || 'Untitled folder';
+  Fliplet.Modal.prompt({
+    title: 'Please enter a folder name'
+  }).then(function(result) {
+    if (result === null) {
+      return;
+    }
 
-  var config = {
-    name: folderName
-  };
-  if (upTo.length && upTo[0].type) {
-    config[upTo[0].type] = upTo[0].id;
-  }
-  if (upTo.length > 1) {
-    var item = upTo[upTo.length - 1];
-    config[item.type] = item.id;
-  }
-  Fliplet.Media.Folders.create(config)
-    .then(function(folder) {
-      attachFolder(folder);
-    });
+    var folderName = result.trim() || 'Untitled folder';
+    var config = {
+      name: folderName
+    };
+
+    if (upTo.length && upTo[0].type) {
+      config[upTo[0].type] = upTo[0].id;
+    }
+
+    if (upTo.length > 1) {
+      var item = upTo[upTo.length - 1];
+      config[item.type] = item.id;
+    }
+    
+    Fliplet.Media.Folders.create(config)
+      .then(function(folder) {
+        attachFolder(folder);
+      });
+  });
 }
 
 function attachFolder(folder) {
