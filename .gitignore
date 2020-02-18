@@ -1,3 +1,5 @@
 .idea
 .DS_Store
 .nvmrc
+.history
+node_modules
