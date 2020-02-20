@@ -212,7 +212,8 @@ function getExtensionFromFile(file) {
         extension = 'png';
         break;
       default:
-        extension = 'jpg';
+        // will attempted to be populated a few lines below
+        extension = null;
     }
   }
 
