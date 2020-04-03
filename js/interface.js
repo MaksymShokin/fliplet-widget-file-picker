@@ -18,6 +18,8 @@ var data = Fliplet.Widget.getData() || {};
 data.type = data.type || '';
 data.selectFiles = data.selectFiles || [];
 
+Fliplet.Widget.toggleSaveButton(data.selectFiles.length);
+
 if (!Array.isArray(data.selectFiles)) data.selectFiles = [data.selectFiles];
 data.fileExtension = data.fileExtension || [];
 data.selectMultiple = data.selectMultiple || false;
@@ -517,6 +519,8 @@ function selectFile(id) {
   if (!data.selectMultiple) unselectAll();
   file.selected = isSelected;
 
+  Fliplet.Widget.toggleSaveButton(isSelected);
+
   var $el = $('.item-holder[data-file-id=' + id + ']');
   $el[!!file.selected ? 'addClass' : 'removeClass']('selected');
   emitSelected();
@@ -533,6 +537,8 @@ function selectFolder(id) {
   var isSelected = !folder.selected;
   if (!data.selectMultiple) unselectAll();
   folder.selected = isSelected;
+
+  Fliplet.Widget.toggleSaveButton(isSelected);
 
   var $el = $('.item-holder[data-folder-id=' + id + ']');
   $el[!!folder.selected ? 'addClass' : 'removeClass']('selected');
@@ -959,7 +965,6 @@ function cleanNavStack() {
 
   return newUpTo;
 }
-
 
 Fliplet.Widget.onSaveRequest(function() {
   var data = _.map(getSelectedData(), function(file) {
