@@ -307,14 +307,18 @@ $(document)
     });
   })
   .on('click', '.delete-folder', function() {
-    var folderID = $(this).parents('.item-holder').data('folder-id');
     var $elementToDelete = $(this).parents('.item-holder');
+    var folderID = $elementToDelete.data('folder-id');
 
     Fliplet.Modal.confirm({
       message: 'Are you sure you want to delete the folder?'
     }).then(function(result) {
       if (!result) {
         return;
+      }
+
+      if ($elementToDelete.hasClass('selected')) {
+        Fliplet.Widget.toggleSaveButton(false);
       }
 
       Fliplet.Media.Folders.delete(folderID).then(function() {
